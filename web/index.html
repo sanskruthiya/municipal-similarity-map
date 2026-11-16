@@ -65,7 +65,7 @@
 <script>
 const CLUSTER_COLORS = ["#1f77b4","#ff7f0e","#2ca02c","#d62728","#9467bd","#8c564b","#e377c2","#7f7f7f","#bcbd22","#17becf","#393b79","#e7ba52"];
 const EXCL = "#cccccc";
-let A, byCode = {}, IND, mode = "umap_oklab", selected = null, map, SENS = null;
+let A, byCode = {}, IND, mode = "umap_oklab", selected = null, map, SENS = null, BOUNDS = {};
 
 function color(a, m = mode) {
   if (a.excluded) return EXCL;
@@ -88,6 +88,8 @@ Promise.all([fetch("data/muni.topojson").then(r => r.json()), fetch("data/attrib
   gj.features.forEach(f => {
     const a = byCode[f.properties.code];
     if (!a) return;
+    const b = BOUNDS[a.code] = new maplibregl.LngLatBounds();
+    (f.geometry.type === "Polygon" ? [f.geometry.coordinates] : f.geometry.coordinates).forEach(p => p[0].forEach(c => b.extend(c)));
     for (const m of ["umap_oklab","pca_oklab","umap_rgb","pca_rgb","cluster"]) f.properties[m] = color(a, m);
   });
   document.getElementById("names").innerHTML = A.areas.map(a => `<option value="${label(a)}">`).join("");
@@ -136,10 +138,8 @@ function select(code, fly = true) {
   if (selected) setStates(selected, false);
   selected = code; setStates(code, true);
   if (fly) {
-    const f = map.querySourceFeatures("muni", { filter: ["==", ["get", "code"], code] });
-    const b = new maplibregl.LngLatBounds();
-    f.forEach(ft => (ft.geometry.type === "Polygon" ? [ft.geometry.coordinates] : ft.geometry.coordinates).forEach(p => p[0].forEach(c => b.extend(c))));
-    if (!b.isEmpty()) map.fitBounds(b, { padding: 120, maxZoom: 10, duration: 600 });
+    const b = BOUNDS[code];
+    if (b && !b.isEmpty()) map.fitBounds(b, { padding: 120, maxZoom: 10, duration: 600 });
   }
   renderInfo(a); drawScatter();
 }
