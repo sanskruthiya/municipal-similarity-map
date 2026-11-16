@@ -159,7 +159,7 @@ function renderInfo(a, cmpCode = null) {
   });
   h += `</table><div class="note">類似度 = 全ペア距離の中での近さの百分位（100が最も近い）。行クリックで指標比較、ダブルクリックでその自治体へ移動。</div>`;
   const st = SENS && SENS.stability[a.code];
-  if (st !== undefined) {
+  if (st != null) {
     const lv = st >= 0.8 ? ["高", "#2a7"] : st >= 0.6 ? ["中", "#c90"] : ["低", "#c33"];
     h += `<div class="note" id="stab">Top10の安定度: <b style="color:${lv[1]}">${(st * 100).toFixed(0)}%（${lv[0]}）</b> — 指標の80%をランダムに選んで${SENS.summary.n_boot}回再計算したとき、Top10が平均何件残るかの割合。低いほど、指標の選び方で類似先が入れ替わりやすい。</div>`;
   }
