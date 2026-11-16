@@ -102,6 +102,23 @@ for key, label, group, fn, tr, src in INDICATORS:
                  "years": sorted({YEARS[x] for x in src}), "source_items": src,
                  "missing": int(s.isna().sum())})
 
+# --- Phase 2: 国土数値情報・メッシュ人口からの指標（06_ksj_features.py の出力）
+KSJ = os.path.join(OUT, "ksj_features.csv")
+KSJ_INDICATORS = [
+    ("pw_density", "人口加重人口密度(人/km², 250mメッシュ)", "log", "2020", "国勢調査250mメッシュ"),
+    ("station_dist", "最寄り駅までの人口加重平均距離(km)", "log", "2020/2023", "S12-23 駅別乗降客数"),
+    ("hospital_dist", "最寄り病院までの人口加重平均距離(km)", "log", "2020", "P04-20 医療機関"),
+    ("agri_ratio", "農用地率(陸域に占める田・畑等)", "sqrt", "2021", "L03-a-21 土地利用3次メッシュ"),
+    ("paddy_share", "農用地に占める田の割合", None, "2021", "L03-a-21 土地利用3次メッシュ"),
+    ("building_ratio", "建物用地率(陸域に占める割合)", "sqrt", "2021", "L03-a-21 土地利用3次メッシュ"),
+]
+if os.path.exists(KSJ):
+    ksj = pd.read_csv(KSJ, dtype={"code": str}).set_index("code").reindex(idx)
+    for key, label, tr, year, src in KSJ_INDICATORS:
+        feat[key] = ksj[key]
+        meta.append({"key": key, "label": label, "group": "立地・土地利用", "transform": tr or "none",
+                     "years": [year], "source_items": [src], "missing": int(ksj[key].isna().sum()), "phase2": True})
+
 feat.index.name = "code"
 feat.to_csv(os.path.join(OUT, "indicators_raw.csv"))
 json.dump(meta, open(os.path.join(OUT, "indicators_meta.json"), "w"), ensure_ascii=False, indent=1)

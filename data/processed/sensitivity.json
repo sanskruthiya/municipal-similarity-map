@@ -1,0 +1,173 @@
+{
+ "neighbor_variants": [
+  {
+   "variant": "分野重みなし（全指標均等）",
+   "mean_overlap": 0.763,
+   "median_overlap": 0.8,
+   "share_ge_half": 0.993
+  },
+  {
+   "variant": "欠損を中央値で補完",
+   "mean_overlap": 0.951,
+   "median_overlap": 1.0,
+   "share_ge_half": 0.984
+  },
+  {
+   "variant": "除外なし（福島7町村も含める）",
+   "mean_overlap": 0.991,
+   "median_overlap": 1.0,
+   "share_ge_half": 1.0
+  },
+  {
+   "variant": "分野「人口・世帯」を除く",
+   "mean_overlap": 0.779,
+   "median_overlap": 0.8,
+   "share_ge_half": 0.991
+  },
+  {
+   "variant": "分野「都市構造・通勤」を除く",
+   "mean_overlap": 0.813,
+   "median_overlap": 0.8,
+   "share_ge_half": 0.993
+  },
+  {
+   "variant": "分野「産業・労働」を除く",
+   "mean_overlap": 0.702,
+   "median_overlap": 0.7,
+   "share_ge_half": 0.936
+  },
+  {
+   "variant": "分野「所得・教育」を除く",
+   "mean_overlap": 0.771,
+   "median_overlap": 0.8,
+   "share_ge_half": 0.975
+  },
+  {
+   "variant": "分野「住宅」を除く",
+   "mean_overlap": 0.811,
+   "median_overlap": 0.8,
+   "share_ge_half": 0.985
+  },
+  {
+   "variant": "分野「生活利便・医療」を除く",
+   "mean_overlap": 0.641,
+   "median_overlap": 0.7,
+   "share_ge_half": 0.857
+  },
+  {
+   "variant": "分野「立地・土地利用」を除く",
+   "mean_overlap": 0.751,
+   "median_overlap": 0.8,
+   "share_ge_half": 0.971
+  },
+  {
+   "variant": "指標の80%をランダム抽出（30回平均）",
+   "mean_overlap": 0.721,
+   "median_overlap": 0.723,
+   "share_ge_half": 0.993
+  }
+ ],
+ "umap_variants": [
+  {
+   "n_neighbors": 10,
+   "min_dist": 0.1,
+   "seed": 42,
+   "trustworthiness": 0.9559,
+   "knn_overlap_vs_original": 0.3751,
+   "knn_overlap_vs_default_umap": 0.5791,
+   "dist_spearman_vs_default_umap": 0.9717
+  },
+  {
+   "n_neighbors": 10,
+   "min_dist": 0.3,
+   "seed": 42,
+   "trustworthiness": 0.9515,
+   "knn_overlap_vs_original": 0.3662,
+   "knn_overlap_vs_default_umap": 0.6422,
+   "dist_spearman_vs_default_umap": 0.989
+  },
+  {
+   "n_neighbors": 10,
+   "min_dist": 0.6,
+   "seed": 42,
+   "trustworthiness": 0.9431,
+   "knn_overlap_vs_original": 0.3444,
+   "knn_overlap_vs_default_umap": 0.6463,
+   "dist_spearman_vs_default_umap": 0.988
+  },
+  {
+   "n_neighbors": 20,
+   "min_dist": 0.1,
+   "seed": 42,
+   "trustworthiness": 0.9532,
+   "knn_overlap_vs_original": 0.351,
+   "knn_overlap_vs_default_umap": 0.7021,
+   "dist_spearman_vs_default_umap": 0.9779
+  },
+  {
+   "n_neighbors": 20,
+   "min_dist": 0.3,
+   "seed": 42,
+   "trustworthiness": 0.9466,
+   "knn_overlap_vs_original": 0.338,
+   "knn_overlap_vs_default_umap": 1.0,
+   "dist_spearman_vs_default_umap": 1.0
+  },
+  {
+   "n_neighbors": 20,
+   "min_dist": 0.3,
+   "seed": 1,
+   "trustworthiness": 0.9473,
+   "knn_overlap_vs_original": 0.3385,
+   "knn_overlap_vs_default_umap": 0.7375,
+   "dist_spearman_vs_default_umap": 0.9967
+  },
+  {
+   "n_neighbors": 20,
+   "min_dist": 0.3,
+   "seed": 2,
+   "trustworthiness": 0.947,
+   "knn_overlap_vs_original": 0.342,
+   "knn_overlap_vs_default_umap": 0.7535,
+   "dist_spearman_vs_default_umap": 0.9976
+  },
+  {
+   "n_neighbors": 20,
+   "min_dist": 0.6,
+   "seed": 42,
+   "trustworthiness": 0.9394,
+   "knn_overlap_vs_original": 0.3167,
+   "knn_overlap_vs_default_umap": 0.788,
+   "dist_spearman_vs_default_umap": 0.9895
+  },
+  {
+   "n_neighbors": 50,
+   "min_dist": 0.1,
+   "seed": 42,
+   "trustworthiness": 0.9534,
+   "knn_overlap_vs_original": 0.3324,
+   "knn_overlap_vs_default_umap": 0.6309,
+   "dist_spearman_vs_default_umap": 0.9782
+  },
+  {
+   "n_neighbors": 50,
+   "min_dist": 0.3,
+   "seed": 42,
+   "trustworthiness": 0.9445,
+   "knn_overlap_vs_original": 0.3177,
+   "knn_overlap_vs_default_umap": 0.6842,
+   "dist_spearman_vs_default_umap": 0.9958
+  },
+  {
+   "n_neighbors": 50,
+   "min_dist": 0.6,
+   "seed": 42,
+   "trustworthiness": 0.9375,
+   "knn_overlap_vs_original": 0.2997,
+   "knn_overlap_vs_default_umap": 0.6134,
+   "dist_spearman_vs_default_umap": 0.9898
+  }
+ ],
+ "n_boot": 30,
+ "k": 10
+}

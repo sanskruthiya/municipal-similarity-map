@@ -569,5 +569,89 @@
    "I5211"
   ],
   "missing": 1
+ },
+ {
+  "key": "pw_density",
+  "label": "人口加重人口密度(人/km², 250mメッシュ)",
+  "group": "立地・土地利用",
+  "transform": "log",
+  "years": [
+   "2020"
+  ],
+  "source_items": [
+   "国勢調査250mメッシュ"
+  ],
+  "missing": 1,
+  "phase2": true
+ },
+ {
+  "key": "station_dist",
+  "label": "最寄り駅までの人口加重平均距離(km)",
+  "group": "立地・土地利用",
+  "transform": "log",
+  "years": [
+   "2020/2023"
+  ],
+  "source_items": [
+   "S12-23 駅別乗降客数"
+  ],
+  "missing": 1,
+  "phase2": true
+ },
+ {
+  "key": "hospital_dist",
+  "label": "最寄り病院までの人口加重平均距離(km)",
+  "group": "立地・土地利用",
+  "transform": "log",
+  "years": [
+   "2020"
+  ],
+  "source_items": [
+   "P04-20 医療機関"
+  ],
+  "missing": 1,
+  "phase2": true
+ },
+ {
+  "key": "agri_ratio",
+  "label": "農用地率(陸域に占める田・畑等)",
+  "group": "立地・土地利用",
+  "transform": "sqrt",
+  "years": [
+   "2021"
+  ],
+  "source_items": [
+   "L03-a-21 土地利用3次メッシュ"
+  ],
+  "missing": 0,
+  "phase2": true
+ },
+ {
+  "key": "paddy_share",
+  "label": "農用地に占める田の割合",
+  "group": "立地・土地利用",
+  "transform": "none",
+  "years": [
+   "2021"
+  ],
+  "source_items": [
+   "L03-a-21 土地利用3次メッシュ"
+  ],
+  "missing": 72,
+  "phase2": true
+ },
+ {
+  "key": "building_ratio",
+  "label": "建物用地率(陸域に占める割合)",
+  "group": "立地・土地利用",
+  "transform": "sqrt",
+  "years": [
+   "2021"
+  ],
+  "source_items": [
+   "L03-a-21 土地利用3次メッシュ"
+  ],
+  "missing": 0,
+  "phase2": true
  }
 ]
