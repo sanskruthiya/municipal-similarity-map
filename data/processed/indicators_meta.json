@@ -1,0 +1,573 @@
+[
+ {
+  "key": "pop_density",
+  "label": "可住地人口密度(人/km²)",
+  "group": "人口・世帯",
+  "transform": "log",
+  "years": [
+   "2020",
+   "2024"
+  ],
+  "source_items": [
+   "A1101",
+   "B1103"
+  ],
+  "missing": 0
+ },
+ {
+  "key": "child_ratio",
+  "label": "15歳未満人口割合",
+  "group": "人口・世帯",
+  "transform": "none",
+  "years": [
+   "2020"
+  ],
+  "source_items": [
+   "A1301"
+  ],
+  "missing": 1
+ },
+ {
+  "key": "elderly_ratio",
+  "label": "65歳以上人口割合",
+  "group": "人口・世帯",
+  "transform": "none",
+  "years": [
+   "2020"
+  ],
+  "source_items": [
+   "A1303"
+  ],
+  "missing": 1
+ },
+ {
+  "key": "pop_change",
+  "label": "人口増減率(2015→2020)",
+  "group": "人口・世帯",
+  "transform": "none",
+  "years": [
+   "2020"
+  ],
+  "source_items": [
+   "A1101"
+  ],
+  "missing": 4
+ },
+ {
+  "key": "proj_change_2050",
+  "label": "将来推計人口変化率(2020→2050)",
+  "group": "人口・世帯",
+  "transform": "none",
+  "years": [
+   "2023"
+  ],
+  "source_items": [
+   "A191007"
+  ],
+  "missing": 13
+ },
+ {
+  "key": "foreign_ratio",
+  "label": "外国人人口割合",
+  "group": "人口・世帯",
+  "transform": "log",
+  "years": [
+   "2020"
+  ],
+  "source_items": [
+   "A1700"
+  ],
+  "missing": 1
+ },
+ {
+  "key": "natural_change",
+  "label": "自然増減率(出生−死亡)/人口",
+  "group": "人口・世帯",
+  "transform": "none",
+  "years": [
+   "2023"
+  ],
+  "source_items": [
+   "A4101",
+   "A4200"
+  ],
+  "missing": 1
+ },
+ {
+  "key": "net_migration",
+  "label": "社会増減率(転入−転出)/人口",
+  "group": "人口・世帯",
+  "transform": "none",
+  "years": [
+   "2024"
+  ],
+  "source_items": [
+   "A5103",
+   "A5104"
+  ],
+  "missing": 1
+ },
+ {
+  "key": "mobility",
+  "label": "人口移動率(転入+転出)/人口",
+  "group": "人口・世帯",
+  "transform": "log",
+  "years": [
+   "2024"
+  ],
+  "source_items": [
+   "A5103",
+   "A5104"
+  ],
+  "missing": 1
+ },
+ {
+  "key": "unmarried",
+  "label": "未婚者割合(15歳以上)",
+  "group": "人口・世帯",
+  "transform": "none",
+  "years": [
+   "2020"
+  ],
+  "source_items": [
+   "A161001"
+  ],
+  "missing": 1
+ },
+ {
+  "key": "single_hh",
+  "label": "単独世帯割合",
+  "group": "人口・世帯",
+  "transform": "none",
+  "years": [
+   "2020"
+  ],
+  "source_items": [
+   "A810105"
+  ],
+  "missing": 1
+ },
+ {
+  "key": "elderly_single_hh",
+  "label": "高齢単身世帯割合",
+  "group": "人口・世帯",
+  "transform": "none",
+  "years": [
+   "2020"
+  ],
+  "source_items": [
+   "A8301"
+  ],
+  "missing": 1
+ },
+ {
+  "key": "hh_size",
+  "label": "平均世帯人員",
+  "group": "人口・世帯",
+  "transform": "none",
+  "years": [
+   "2020"
+  ],
+  "source_items": [
+   "A710201"
+  ],
+  "missing": 1
+ },
+ {
+  "key": "day_night",
+  "label": "昼夜間人口比率",
+  "group": "都市構造・通勤",
+  "transform": "log",
+  "years": [
+   "2020"
+  ],
+  "source_items": [
+   "A6108"
+  ],
+  "missing": 1
+ },
+ {
+  "key": "did_ratio",
+  "label": "DID(人口集中地区)人口割合",
+  "group": "都市構造・通勤",
+  "transform": "none",
+  "years": [
+   "2020"
+  ],
+  "source_items": [
+   "A1801"
+  ],
+  "missing": 1
+ },
+ {
+  "key": "out_commute",
+  "label": "他市区町村への通勤者比率",
+  "group": "都市構造・通勤",
+  "transform": "none",
+  "years": [
+   "2020"
+  ],
+  "source_items": [
+   "F2705"
+  ],
+  "missing": 1
+ },
+ {
+  "key": "rail_commute",
+  "label": "通勤通学の鉄道利用割合",
+  "group": "都市構造・通勤",
+  "transform": "sqrt",
+  "years": [
+   "2020"
+  ],
+  "source_items": [
+   "H730102"
+  ],
+  "missing": 1
+ },
+ {
+  "key": "car_commute",
+  "label": "通勤通学の自家用車利用割合",
+  "group": "都市構造・通勤",
+  "transform": "none",
+  "years": [
+   "2020"
+  ],
+  "source_items": [
+   "H730105"
+  ],
+  "missing": 1
+ },
+ {
+  "key": "bike_commute",
+  "label": "通勤通学の自転車利用割合",
+  "group": "都市構造・通勤",
+  "transform": "sqrt",
+  "years": [
+   "2020"
+  ],
+  "source_items": [
+   "H730111"
+  ],
+  "missing": 1
+ },
+ {
+  "key": "forest_ratio",
+  "label": "林野率",
+  "group": "都市構造・通勤",
+  "transform": "none",
+  "years": [
+   "2019",
+   "2024"
+  ],
+  "source_items": [
+   "B1105",
+   "B1101"
+  ],
+  "missing": 0
+ },
+ {
+  "key": "primary_ind",
+  "label": "第1次産業就業者比率",
+  "group": "産業・労働",
+  "transform": "sqrt",
+  "years": [
+   "2020"
+  ],
+  "source_items": [
+   "F2201"
+  ],
+  "missing": 1
+ },
+ {
+  "key": "secondary_ind",
+  "label": "第2次産業就業者比率",
+  "group": "産業・労働",
+  "transform": "none",
+  "years": [
+   "2020"
+  ],
+  "source_items": [
+   "F2211"
+  ],
+  "missing": 1
+ },
+ {
+  "key": "unemployment",
+  "label": "完全失業率",
+  "group": "産業・労働",
+  "transform": "none",
+  "years": [
+   "2020"
+  ],
+  "source_items": [
+   "F1107"
+  ],
+  "missing": 1
+ },
+ {
+  "key": "female_lfpr",
+  "label": "女性労働力率",
+  "group": "産業・労働",
+  "transform": "none",
+  "years": [
+   "2020"
+  ],
+  "source_items": [
+   "F110102"
+  ],
+  "missing": 1
+ },
+ {
+  "key": "elderly_workers",
+  "label": "就業者に占める65歳以上割合",
+  "group": "産業・労働",
+  "transform": "none",
+  "years": [
+   "2020"
+  ],
+  "source_items": [
+   "F2116"
+  ],
+  "missing": 1
+ },
+ {
+  "key": "regular_emp",
+  "label": "雇用者に占める正規雇用割合",
+  "group": "産業・労働",
+  "transform": "none",
+  "years": [
+   "2020"
+  ],
+  "source_items": [
+   "F2409"
+  ],
+  "missing": 1
+ },
+ {
+  "key": "jobs_per_capita",
+  "label": "従業者数/常住人口",
+  "group": "産業・労働",
+  "transform": "log",
+  "years": [
+   "2014"
+  ],
+  "source_items": [
+   "C2207"
+  ],
+  "missing": 2
+ },
+ {
+  "key": "emp_manufacturing",
+  "label": "従業者に占める製造業割合",
+  "group": "産業・労働",
+  "transform": "sqrt",
+  "years": [
+   "2014"
+  ],
+  "source_items": [
+   "C220709"
+  ],
+  "missing": 3
+ },
+ {
+  "key": "emp_info_finance_prof",
+  "label": "従業者に占める情報通信・金融・専門サービス割合",
+  "group": "産業・労働",
+  "transform": "log",
+  "years": [
+   "2014"
+  ],
+  "source_items": [
+   "C220711",
+   "C220716",
+   "C220718"
+  ],
+  "missing": 3
+ },
+ {
+  "key": "emp_hospitality",
+  "label": "従業者に占める宿泊・飲食サービス割合",
+  "group": "産業・労働",
+  "transform": "log",
+  "years": [
+   "2014"
+  ],
+  "source_items": [
+   "C220719"
+  ],
+  "missing": 3
+ },
+ {
+  "key": "emp_health_welfare",
+  "label": "従業者に占める医療・福祉割合",
+  "group": "産業・労働",
+  "transform": "none",
+  "years": [
+   "2014"
+  ],
+  "source_items": [
+   "C220722"
+  ],
+  "missing": 3
+ },
+ {
+  "key": "income",
+  "label": "納税義務者1人当たり課税対象所得(千円)",
+  "group": "所得・教育",
+  "transform": "log",
+  "years": [
+   "2024"
+  ],
+  "source_items": [
+   "C120110",
+   "C120120"
+  ],
+  "missing": 168
+ },
+ {
+  "key": "univ_grad",
+  "label": "最終学歴が大学・大学院の割合",
+  "group": "所得・教育",
+  "transform": "none",
+  "years": [
+   "2020"
+  ],
+  "source_items": [
+   "E9106"
+  ],
+  "missing": 1
+ },
+ {
+  "key": "low_edu",
+  "label": "最終学歴が小学校・中学校の割合",
+  "group": "所得・教育",
+  "transform": "none",
+  "years": [
+   "2020"
+  ],
+  "source_items": [
+   "E9102"
+  ],
+  "missing": 1
+ },
+ {
+  "key": "owner_ratio",
+  "label": "持ち家世帯割合",
+  "group": "住宅",
+  "transform": "none",
+  "years": [
+   "2020"
+  ],
+  "source_items": [
+   "census_h_111_1",
+   "census_h_1_1"
+  ],
+  "missing": 1
+ },
+ {
+  "key": "private_rent_ratio",
+  "label": "民営借家世帯割合",
+  "group": "住宅",
+  "transform": "none",
+  "years": [
+   "2020"
+  ],
+  "source_items": [
+   "census_h_113_1"
+  ],
+  "missing": 1
+ },
+ {
+  "key": "detached_ratio",
+  "label": "一戸建て居住世帯割合",
+  "group": "住宅",
+  "transform": "none",
+  "years": [
+   "2020"
+  ],
+  "source_items": [
+   "census_h_1_11"
+  ],
+  "missing": 1
+ },
+ {
+  "key": "highrise_ratio",
+  "label": "11階建以上の共同住宅居住世帯割合",
+  "group": "住宅",
+  "transform": "sqrt",
+  "years": [
+   "2020"
+  ],
+  "source_items": [
+   "census_h_1_1304",
+   "census_h_1_1305"
+  ],
+  "missing": 1
+ },
+ {
+  "key": "retail_pc",
+  "label": "小売店数(人口千人当たり)",
+  "group": "生活利便・医療",
+  "transform": "log",
+  "years": [
+   "2021"
+  ],
+  "source_items": [
+   "H6130"
+  ],
+  "missing": 1
+ },
+ {
+  "key": "restaurant_pc",
+  "label": "飲食店数(人口千人当たり)",
+  "group": "生活利便・医療",
+  "transform": "log",
+  "years": [
+   "2021"
+  ],
+  "source_items": [
+   "H6131"
+  ],
+  "missing": 1
+ },
+ {
+  "key": "doctors_pc",
+  "label": "医師数(人口10万人当たり)",
+  "group": "生活利便・医療",
+  "transform": "sqrt",
+  "years": [
+   "2022"
+  ],
+  "source_items": [
+   "I6100"
+  ],
+  "missing": 1
+ },
+ {
+  "key": "clinics_pc",
+  "label": "一般診療所数(人口10万人当たり)",
+  "group": "生活利便・医療",
+  "transform": "log1p",
+  "years": [
+   "2023"
+  ],
+  "source_items": [
+   "I5102"
+  ],
+  "missing": 1
+ },
+ {
+  "key": "beds_pc",
+  "label": "病院病床数(人口10万人当たり)",
+  "group": "生活利便・医療",
+  "transform": "sqrt",
+  "years": [
+   "2023"
+  ],
+  "source_items": [
+   "I5211"
+  ],
+  "missing": 1
+ }
+]

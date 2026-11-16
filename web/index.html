@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>市区町村 統計類似色マップ</title>
+<link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<script src="https://unpkg.com/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
+<script src="https://cdn.plot.ly/plotly-gl3d-2.35.2.min.js"></script>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: "Hiragino Sans", "Noto Sans JP", sans-serif; font-size: 13px; color: #222; }
+  #app { display: grid; grid-template-columns: 1fr 400px; height: 100vh; }
+  #map { position: relative; }
+  #side { overflow-y: auto; border-left: 1px solid #ddd; padding: 10px 12px; background: #fafafa; }
+  h1 { font-size: 15px; margin: 0 0 6px; }
+  .ctrl { display: flex; gap: 6px; margin: 6px 0; align-items: center; flex-wrap: wrap; }
+  select, input { font-size: 13px; padding: 3px 5px; }
+  #search { flex: 1; min-width: 160px; }
+  #scatter { width: 100%; height: 280px; background: #fff; border: 1px solid #ddd; }
+  .swatch { display: inline-block; width: 14px; height: 14px; border: 1px solid #0003; vertical-align: middle; margin-right: 4px; border-radius: 2px; }
+  table { border-collapse: collapse; width: 100%; }
+  td, th { padding: 2px 4px; border-bottom: 1px solid #eee; text-align: left; }
+  #nbrs tr { cursor: pointer; }
+  #nbrs tr:hover { background: #eef; }
+  .bar { position: relative; height: 10px; background: #eee; width: 110px; }
+  .bar span { position: absolute; top: 0; height: 10px; }
+  .bar i { position: absolute; left: 50%; top: -2px; height: 14px; border-left: 1px solid #888; }
+  .grp { font-weight: bold; background: #f0f0f0; }
+  .note { color: #666; font-size: 11px; line-height: 1.5; }
+  .tag { display: inline-block; background: #fde; color: #a03; padding: 0 4px; border-radius: 3px; font-size: 11px; }
+  #hover { position: absolute; z-index: 2; pointer-events: none; background: #fff; padding: 3px 6px; border: 1px solid #ccc; border-radius: 3px; display: none; }
+  details summary { cursor: pointer; font-weight: bold; margin: 8px 0 4px; }
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="map"><div id="hover"></div></div>
+  <div id="side">
+    <h1>市区町村 統計類似色マップ</h1>
+    <div class="note">43指標（人口・都市構造・産業・所得教育・住宅・生活利便）を標準化し、3次元に圧縮して色に変換。<b>色が近い＝統計的傾向が近い</b>（色そのものに意味はありません）。</div>
+    <div class="ctrl">
+      <label>配色: <select id="mode">
+        <option value="umap_oklab">UMAP → OKLab（推奨）</option>
+        <option value="pca_oklab">PCA → OKLab</option>
+        <option value="umap_rgb">UMAP → RGB直接</option>
+        <option value="pca_rgb">PCA → RGB直接</option>
+        <option value="cluster">k-meansクラスタ(12)</option>
+      </select></label>
+    </div>
+    <div class="ctrl">
+      <input id="search" list="names" placeholder="市区町村名で検索（例: 渋谷区）">
+      <datalist id="names"></datalist>
+    </div>
+    <div id="scatter"></div>
+    <div class="note">3D散布図は選択中の手法の埋め込み空間（ドラッグで回転・クリックで選択）。</div>
+    <div id="info"><p class="note">地図または散布図をクリックすると、類似する市区町村トップ10と指標プロファイルを表示します。</p></div>
+    <details><summary>手法と検証指標</summary><div id="method" class="note"></div></details>
+    <p class="note">出典: e-Stat「社会・人口統計体系 市区町村データ」・令和2年国勢調査、国土数値情報（行政区域 N03, 2024）を加工して作成</p>
+  </div>
+</div>
+<script>
+const CLUSTER_COLORS = ["#1f77b4","#ff7f0e","#2ca02c","#d62728","#9467bd","#8c564b","#e377c2","#7f7f7f","#bcbd22","#17becf","#393b79","#e7ba52"];
+const EXCL = "#cccccc";
+let A, byCode = {}, IND, mode = "umap_oklab", selected = null, map;
+
+function color(a, m = mode) {
+  if (a.excluded) return EXCL;
+  return m === "cluster" ? CLUSTER_COLORS[a.cluster % 12] : a.colors[m];
+}
+function label(a) { return a.name.startsWith(a.pref) ? a.name : `${a.pref} ${a.name}`; }
+function fmt(v) {
+  if (v === null || v === undefined) return "–";
+  const x = Math.abs(v);
+  return x >= 1000 ? v.toFixed(0) : x >= 10 ? v.toFixed(1) : x >= 1 ? v.toFixed(2) : v.toFixed(3);
+}
+
+Promise.all([fetch("data/muni.topojson").then(r => r.json()), fetch("data/attributes.json").then(r => r.json())])
+.then(([topo, attrs]) => {
+  A = attrs; IND = A.meta.indicators;
+  A.areas.forEach(a => byCode[a.code] = a);
+  const gj = topojson.feature(topo, topo.objects[Object.keys(topo.objects)[0]]);
+  gj.features.forEach(f => {
+    const a = byCode[f.properties.code];
+    if (!a) return;
+    for (const m of ["umap_oklab","pca_oklab","umap_rgb","pca_rgb","cluster"]) f.properties[m] = color(a, m);
+  });
+  document.getElementById("names").innerHTML = A.areas.map(a => `<option value="${label(a)}">`).join("");
+  initMap(gj); drawScatter(); drawMethod();
+});
+
+function initMap(gj) {
+  map = new maplibregl.Map({
+    container: "map",
+    style: { version: 8, sources: {}, layers: [{ id: "bg", type: "background", paint: { "background-color": "#dfe9f0" } }] },
+    center: [137.5, 37.5], zoom: 4.3, attributionControl: false
+  });
+  map.addControl(new maplibregl.NavigationControl(), "top-left");
+  map.addControl(new maplibregl.AttributionControl({ customAttribution: "e-Stat / 国土数値情報" }));
+  map.on("load", () => {
+    map.addSource("muni", { type: "geojson", data: gj, promoteId: "code" });
+    map.addLayer({ id: "fill", type: "fill", source: "muni", paint: {
+      "fill-color": ["get", mode],
+      "fill-opacity": ["case", ["boolean", ["feature-state", "dim"], false], 0.25, 1] } });
+    map.addLayer({ id: "line", type: "line", source: "muni", paint: { "line-color": "#ffffff", "line-width": 0.3, "line-opacity": 0.6 } });
+    map.addLayer({ id: "hl", type: "line", source: "muni", paint: {
+      "line-color": ["case", ["boolean", ["feature-state", "sel"], false], "#000", "#333"],
+      "line-width": ["case", ["boolean", ["feature-state", "sel"], false], 3, ["boolean", ["feature-state", "nbr"], false], 1.8, 0] } });
+    const hover = document.getElementById("hover");
+    map.on("mousemove", "fill", e => {
+      const a = byCode[e.features[0].properties.code];
+      map.getCanvas().style.cursor = "pointer";
+      hover.style.display = "block"; hover.style.left = (e.point.x + 12) + "px"; hover.style.top = (e.point.y + 12) + "px";
+      hover.innerHTML = `<span class="swatch" style="background:${color(a)}"></span>${label(a)}`;
+    });
+    map.on("mouseleave", "fill", () => { hover.style.display = "none"; map.getCanvas().style.cursor = ""; });
+    map.on("click", "fill", e => select(e.features[0].properties.code, false));
+    window.__mapReady = true;
+  });
+}
+
+function setStates(code, on) {
+  const a = byCode[code];
+  map.setFeatureState({ source: "muni", id: code }, { sel: on });
+  (a.neighbors || []).forEach(n => map.setFeatureState({ source: "muni", id: n.code }, { nbr: on }));
+}
+
+function select(code, fly = true) {
+  const a = byCode[code];
+  if (!a) return;
+  if (selected) setStates(selected, false);
+  selected = code; setStates(code, true);
+  if (fly) {
+    const f = map.querySourceFeatures("muni", { filter: ["==", ["get", "code"], code] });
+    const b = new maplibregl.LngLatBounds();
+    f.forEach(ft => (ft.geometry.type === "Polygon" ? [ft.geometry.coordinates] : ft.geometry.coordinates).forEach(p => p[0].forEach(c => b.extend(c))));
+    if (!b.isEmpty()) map.fitBounds(b, { padding: 120, maxZoom: 10, duration: 600 });
+  }
+  renderInfo(a); drawScatter();
+}
+
+function renderInfo(a, cmpCode = null) {
+  const el = document.getElementById("info");
+  if (a.excluded) {
+    el.innerHTML = `<h3>${label(a)} <span class="tag">類似度計算から除外</span></h3><p class="note">${A.meta.excluded_note}</p>`;
+    return;
+  }
+  const cmp = cmpCode ? byCode[cmpCode] : null;
+  let h = `<h3><span class="swatch" style="background:${color(a)}"></span>${label(a)}</h3>`;
+  h += `<b>統計的に似ている市区町村 Top${A.meta.k}</b><table id="nbrs"><tr><th>#</th><th>市区町村</th><th>距離</th><th>類似度</th></tr>`;
+  a.neighbors.forEach((n, i) => {
+    const b = byCode[n.code];
+    h += `<tr data-code="${n.code}" style="${cmpCode === n.code ? "background:#ffd" : ""}"><td>${i + 1}</td><td><span class="swatch" style="background:${color(b)}"></span>${label(b)}</td><td>${n.d.toFixed(2)}</td><td>${n.sim.toFixed(1)}</td></tr>`;
+  });
+  h += `</table><div class="note">類似度 = 全ペア距離の中での近さの百分位（100が最も近い）。行クリックで指標比較、ダブルクリックでその自治体へ移動。</div>`;
+  h += `<b>指標プロファイル</b>${cmp ? `（<span style="color:#d33">■${label(a)}</span> vs <span style="color:#36c">■${label(cmp)}</span>）` : ""}`;
+  h += `<div class="note">バー: 全国中央値からの標準化偏差（±4でクリップ）。値は加工後の実数値。*は欠損を近傍補完。</div><table>`;
+  let g = null;
+  IND.forEach((ind, i) => {
+    if (ind.group !== g) { g = ind.group; h += `<tr class="grp"><td colspan="3">${g}</td></tr>`; }
+    const bar = (z, c, top) => { const w = Math.min(Math.abs(z), 4) / 4 * 55; return `<span style="background:${c};left:${z < 0 ? 55 - w : 55}px;width:${w}px;top:${top}px;height:${cmp ? 5 : 10}px"></span>`; };
+    const imp = a.imputed.includes(ind.key) ? "*" : "";
+    h += `<tr><td>${ind.label}</td><td class="bar"><i></i>${bar(a.z[i], "#d33", 0)}${cmp ? bar(cmp.z[i], "#36c", 5) : ""}</td><td>${fmt(a.raw[i])}${imp}${cmp ? ` / ${fmt(cmp.raw[i])}${cmp.imputed.includes(ind.key) ? "*" : ""}` : ""}</td></tr>`;
+  });
+  h += `</table>`;
+  el.innerHTML = h;
+  el.querySelectorAll("#nbrs tr[data-code]").forEach(tr => {
+    tr.onclick = () => renderInfo(a, tr.dataset.code);
+    tr.ondblclick = () => select(tr.dataset.code);
+  });
+}
+
+function drawScatter() {
+  const emb = mode.startsWith("pca") ? "pca" : "umap";
+  const pts = A.areas.filter(a => !a.excluded);
+  const sel = selected ? byCode[selected] : null;
+  const nb = sel && sel.neighbors ? new Set(sel.neighbors.map(n => n.code)) : new Set();
+  const traces = [{
+    type: "scatter3d", mode: "markers",
+    x: pts.map(a => a.emb[emb][0]), y: pts.map(a => a.emb[emb][1]), z: pts.map(a => a.emb[emb][2]),
+    text: pts.map(label), customdata: pts.map(a => a.code), hoverinfo: "text",
+    marker: { size: pts.map(a => a.code === selected ? 8 : nb.has(a.code) ? 5 : 2.5), color: pts.map(a => color(a)), line: { width: 0 } }
+  }];
+  if (sel && !sel.excluded) {
+    const s = [sel, ...sel.neighbors.map(n => byCode[n.code])];
+    traces.push({ type: "scatter3d", mode: "markers", x: s.map(a => a.emb[emb][0]), y: s.map(a => a.emb[emb][1]), z: s.map(a => a.emb[emb][2]),
+      text: s.map(label), customdata: s.map(a => a.code), hoverinfo: "text",
+      marker: { size: s.map((_, i) => i ? 5 : 9), color: s.map(a => color(a)), line: { color: "#000", width: 2 } } });
+  }
+  const ax = n => ({ title: { text: emb.toUpperCase() + n, font: { size: 10 } }, showticklabels: false });
+  const el = document.getElementById("scatter");
+  const cam = el.layout && el.layout.scene ? el.layout.scene.camera : undefined;
+  Plotly.react(el, traces, { margin: { l: 0, r: 0, t: 0, b: 0 }, showlegend: false, uirevision: emb,
+    scene: { xaxis: ax(1), yaxis: ax(2), zaxis: ax(3), camera: cam } }, { displaylogo: false, responsive: true });
+  if (!el.__bound) { el.on("plotly_click", d => select(d.points[0].customdata)); el.__bound = true; }
+}
+
+function drawMethod() {
+  const m = A.meta.metrics, e = A.meta.pca_explained;
+  const row = (k, n) => `<tr><td>${n}</td><td>${m.pca[k]}</td><td>${m.umap[k]}</td></tr>`;
+  document.getElementById("method").innerHTML = `
+  <p>前処理: 規模の指標は比率・密度・人口あたりに変換 → 歪んだ分布は対数/平方根変換 → 中央値・IQRでロバスト標準化（±4でクリップ）→ 欠損はKNN補完 → 分野ごとに寄与を均等化（重み 1/√指標数）。距離はこの空間でのユークリッド距離。</p>
+  <p>3次元化: PCA（累積寄与率 ${e.slice(0, 3).map(v => (v * 100).toFixed(1) + "%").join(" / ")}）とUMAP（n_neighbors=20, min_dist=0.3）。各軸を明度・赤緑・青黄に割り当て、知覚的に均等なOKLab色空間で配色。</p>
+  <table><tr><th>検証指標</th><th>PCA</th><th>UMAP</th></tr>
+  ${row("trustworthiness_k10", "Trustworthiness (k=10)")}
+  ${row("knn_overlap_k10_oklab_color", "近傍10件の一致率（OKLab色）")}
+  ${row("knn_overlap_k10_rgb_color(perceptual)", "近傍10件の一致率（RGB色）")}
+  ${row("dist_spearman_oklab_color", "距離順位相関（OKLab色）")}
+  ${row("dist_spearman_rgb_color(perceptual)", "距離順位相関（RGB色）")}</table>
+  <p>UMAPは近傍関係（似たもの同士）を、PCAは全体の距離関係をよく保ちます。${A.meta.excluded_note}（灰色表示）。</p>`;
+}
+
+document.getElementById("mode").onchange = e => {
+  mode = e.target.value;
+  map.setPaintProperty("fill", "fill-color", ["get", mode]);
+  drawScatter();
+  if (selected) renderInfo(byCode[selected]);
+};
+document.getElementById("search").onchange = e => {
+  const a = A.areas.find(a => label(a) === e.target.value || a.name === e.target.value);
+  if (a) select(a.code);
+};
+</script>
+</body>
+</html>

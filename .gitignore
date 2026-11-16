@@ -1,0 +1,5 @@
+data/raw/
+data/geo/
+__pycache__/
+*.pyc
+.env
