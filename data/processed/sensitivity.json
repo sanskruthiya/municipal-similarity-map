@@ -2,43 +2,43 @@
  "neighbor_variants": [
   {
    "variant": "分野重みなし（全指標均等）",
-   "mean_overlap": 0.763,
+   "mean_overlap": 0.762,
    "median_overlap": 0.8,
    "share_ge_half": 0.993
   },
   {
    "variant": "欠損を中央値で補完",
-   "mean_overlap": 0.951,
+   "mean_overlap": 0.95,
    "median_overlap": 1.0,
    "share_ge_half": 0.984
   },
   {
    "variant": "除外なし（福島7町村も含める）",
-   "mean_overlap": 0.991,
+   "mean_overlap": 0.992,
    "median_overlap": 1.0,
    "share_ge_half": 1.0
   },
   {
    "variant": "分野「人口・世帯」を除く",
-   "mean_overlap": 0.779,
+   "mean_overlap": 0.78,
    "median_overlap": 0.8,
    "share_ge_half": 0.991
   },
   {
    "variant": "分野「都市構造・通勤」を除く",
-   "mean_overlap": 0.813,
+   "mean_overlap": 0.812,
    "median_overlap": 0.8,
-   "share_ge_half": 0.993
+   "share_ge_half": 0.992
   },
   {
    "variant": "分野「産業・労働」を除く",
-   "mean_overlap": 0.702,
+   "mean_overlap": 0.703,
    "median_overlap": 0.7,
    "share_ge_half": 0.936
   },
   {
    "variant": "分野「所得・教育」を除く",
-   "mean_overlap": 0.771,
+   "mean_overlap": 0.77,
    "median_overlap": 0.8,
    "share_ge_half": 0.975
   },
@@ -46,25 +46,25 @@
    "variant": "分野「住宅」を除く",
    "mean_overlap": 0.811,
    "median_overlap": 0.8,
-   "share_ge_half": 0.985
+   "share_ge_half": 0.986
   },
   {
    "variant": "分野「生活利便・医療」を除く",
-   "mean_overlap": 0.641,
+   "mean_overlap": 0.642,
    "median_overlap": 0.7,
-   "share_ge_half": 0.857
+   "share_ge_half": 0.858
   },
   {
    "variant": "分野「立地・土地利用」を除く",
-   "mean_overlap": 0.751,
+   "mean_overlap": 0.75,
    "median_overlap": 0.8,
-   "share_ge_half": 0.971
+   "share_ge_half": 0.97
   },
   {
    "variant": "指標の80%をランダム抽出（30回平均）",
    "mean_overlap": 0.721,
    "median_overlap": 0.723,
-   "share_ge_half": 0.993
+   "share_ge_half": 0.994
   }
  ],
  "umap_variants": [
@@ -72,44 +72,44 @@
    "n_neighbors": 10,
    "min_dist": 0.1,
    "seed": 42,
-   "trustworthiness": 0.9559,
-   "knn_overlap_vs_original": 0.3751,
-   "knn_overlap_vs_default_umap": 0.5791,
-   "dist_spearman_vs_default_umap": 0.9717
+   "trustworthiness": 0.9568,
+   "knn_overlap_vs_original": 0.3772,
+   "knn_overlap_vs_default_umap": 0.5781,
+   "dist_spearman_vs_default_umap": 0.9845
   },
   {
    "n_neighbors": 10,
    "min_dist": 0.3,
    "seed": 42,
-   "trustworthiness": 0.9515,
-   "knn_overlap_vs_original": 0.3662,
-   "knn_overlap_vs_default_umap": 0.6422,
-   "dist_spearman_vs_default_umap": 0.989
+   "trustworthiness": 0.9521,
+   "knn_overlap_vs_original": 0.3694,
+   "knn_overlap_vs_default_umap": 0.6379,
+   "dist_spearman_vs_default_umap": 0.9898
   },
   {
    "n_neighbors": 10,
    "min_dist": 0.6,
    "seed": 42,
-   "trustworthiness": 0.9431,
-   "knn_overlap_vs_original": 0.3444,
-   "knn_overlap_vs_default_umap": 0.6463,
-   "dist_spearman_vs_default_umap": 0.988
+   "trustworthiness": 0.9437,
+   "knn_overlap_vs_original": 0.3448,
+   "knn_overlap_vs_default_umap": 0.6726,
+   "dist_spearman_vs_default_umap": 0.9896
   },
   {
    "n_neighbors": 20,
    "min_dist": 0.1,
    "seed": 42,
-   "trustworthiness": 0.9532,
-   "knn_overlap_vs_original": 0.351,
-   "knn_overlap_vs_default_umap": 0.7021,
-   "dist_spearman_vs_default_umap": 0.9779
+   "trustworthiness": 0.9513,
+   "knn_overlap_vs_original": 0.3521,
+   "knn_overlap_vs_default_umap": 0.7263,
+   "dist_spearman_vs_default_umap": 0.9938
   },
   {
    "n_neighbors": 20,
    "min_dist": 0.3,
    "seed": 42,
-   "trustworthiness": 0.9466,
-   "knn_overlap_vs_original": 0.338,
+   "trustworthiness": 0.9465,
+   "knn_overlap_vs_original": 0.3404,
    "knn_overlap_vs_default_umap": 1.0,
    "dist_spearman_vs_default_umap": 1.0
   },
@@ -117,55 +117,55 @@
    "n_neighbors": 20,
    "min_dist": 0.3,
    "seed": 1,
-   "trustworthiness": 0.9473,
-   "knn_overlap_vs_original": 0.3385,
-   "knn_overlap_vs_default_umap": 0.7375,
-   "dist_spearman_vs_default_umap": 0.9967
+   "trustworthiness": 0.9471,
+   "knn_overlap_vs_original": 0.3431,
+   "knn_overlap_vs_default_umap": 0.7602,
+   "dist_spearman_vs_default_umap": 0.9949
   },
   {
    "n_neighbors": 20,
    "min_dist": 0.3,
    "seed": 2,
-   "trustworthiness": 0.947,
-   "knn_overlap_vs_original": 0.342,
-   "knn_overlap_vs_default_umap": 0.7535,
-   "dist_spearman_vs_default_umap": 0.9976
+   "trustworthiness": 0.9503,
+   "knn_overlap_vs_original": 0.3456,
+   "knn_overlap_vs_default_umap": 0.6582,
+   "dist_spearman_vs_default_umap": 0.9848
   },
   {
    "n_neighbors": 20,
    "min_dist": 0.6,
    "seed": 42,
-   "trustworthiness": 0.9394,
-   "knn_overlap_vs_original": 0.3167,
-   "knn_overlap_vs_default_umap": 0.788,
-   "dist_spearman_vs_default_umap": 0.9895
+   "trustworthiness": 0.9409,
+   "knn_overlap_vs_original": 0.3212,
+   "knn_overlap_vs_default_umap": 0.7629,
+   "dist_spearman_vs_default_umap": 0.9923
   },
   {
    "n_neighbors": 50,
    "min_dist": 0.1,
    "seed": 42,
-   "trustworthiness": 0.9534,
-   "knn_overlap_vs_original": 0.3324,
-   "knn_overlap_vs_default_umap": 0.6309,
-   "dist_spearman_vs_default_umap": 0.9782
+   "trustworthiness": 0.9531,
+   "knn_overlap_vs_original": 0.3303,
+   "knn_overlap_vs_default_umap": 0.6166,
+   "dist_spearman_vs_default_umap": 0.9849
   },
   {
    "n_neighbors": 50,
    "min_dist": 0.3,
    "seed": 42,
-   "trustworthiness": 0.9445,
-   "knn_overlap_vs_original": 0.3177,
-   "knn_overlap_vs_default_umap": 0.6842,
-   "dist_spearman_vs_default_umap": 0.9958
+   "trustworthiness": 0.9443,
+   "knn_overlap_vs_original": 0.3137,
+   "knn_overlap_vs_default_umap": 0.6779,
+   "dist_spearman_vs_default_umap": 0.9955
   },
   {
    "n_neighbors": 50,
    "min_dist": 0.6,
    "seed": 42,
-   "trustworthiness": 0.9375,
-   "knn_overlap_vs_original": 0.2997,
-   "knn_overlap_vs_default_umap": 0.6134,
-   "dist_spearman_vs_default_umap": 0.9898
+   "trustworthiness": 0.9387,
+   "knn_overlap_vs_original": 0.2996,
+   "knn_overlap_vs_default_umap": 0.5816,
+   "dist_spearman_vs_default_umap": 0.9764
   }
  ],
  "n_boot": 30,
