@@ -2,7 +2,7 @@
 - 令和2年国勢調査 250mメッシュ人口（e-Stat 統計GIS, T001142。ファイル名 tblT001142Q*.txt, KEY_CODE 10桁）
 - 国土数値情報: 駅別乗降客数 S12-23（駅位置）、医療機関 P04-20、土地利用3次メッシュ L03-a-21（2021, 1km）
 """
-import os, sys, urllib.request, concurrent.futures as cf
+import os, sys, urllib.error, urllib.request, concurrent.futures as cf
 import geopandas as gpd
 from shapely.geometry import box
 
@@ -34,6 +34,8 @@ def get(url, path):
         with open(path, "wb") as f:
             f.write(data)
         return path, "ok"
+    except urllib.error.HTTPError as e:
+        return path, "404" if e.code == 404 else f"err {e}"
     except Exception as e:
         return path, f"err {e}"
 
@@ -49,10 +51,17 @@ if __name__ == "__main__":
         jobs.append((f"{KSJ}/L03-a/L03-a-21/L03-a-21_{m}-jgd2011_GML.zip",
                      os.path.join(RAW, "ksj", "L03", f"L03-a-21_{m}.zip")))
     os.makedirs(os.path.join(RAW, "ksj", "L03"), exist_ok=True)
-    stat = {}
+    os.makedirs(os.path.join(RAW, "mesh"), exist_ok=True)
+    stat, fatal = {}, []
     with cf.ThreadPoolExecutor(6) as ex:
         for path, s in ex.map(lambda j: get(*j), jobs):
             stat[s.split()[0]] = stat.get(s.split()[0], 0) + 1
-            if s.startswith("err"):
+            if s not in ("ok", "cached"):
                 print(os.path.basename(path), s)
+                # 1次メッシュ単位のファイルは、陸地を含まない区画が 404 になる（正常）
+                tiled = os.path.basename(path).startswith(("pop250_", "L03-a-21_"))
+                if not (tiled and s == "404"):
+                    fatal.append(path)
     print(stat)
+    if fatal:
+        sys.exit(f"{len(fatal)} downloads failed; re-run to retry (cached files are skipped)")
