@@ -14,6 +14,10 @@
   body { margin: 0; font-family: "Hiragino Sans", "Noto Sans JP", sans-serif; font-size: 13px; color: #222; }
   #app { display: grid; grid-template-columns: 1fr 400px; height: 100vh; }
   #map { position: relative; }
+  @media (max-width: 800px) {
+    #app { grid-template-columns: 1fr; grid-template-rows: 60vh auto; height: auto; }
+    #side { border-left: 0; border-top: 1px solid #ddd; overflow: visible; }
+  }
   #side { overflow-y: auto; border-left: 1px solid #ddd; padding: 10px 12px; background: #fafafa; }
   h1 { font-size: 15px; margin: 0 0 6px; }
   .ctrl { display: flex; gap: 6px; margin: 6px 0; align-items: center; flex-wrap: wrap; }
@@ -180,6 +184,7 @@ function select(code, fly = true) {
   renderInfo(a); drawScatter();
 }
 
+let lastRow = {};
 function renderInfo(a, cmpCode = null) {
   const el = document.getElementById("info");
   if (a.excluded) {
@@ -211,10 +216,13 @@ function renderInfo(a, cmpCode = null) {
   });
   h += `</table>`;
   el.innerHTML = h;
-  el.querySelectorAll("#nbrs tr[data-code]").forEach(tr => {
-    tr.onclick = () => renderInfo(a, tr.dataset.code);
-    tr.ondblclick = () => select(tr.dataset.code);
-  });
+  const row = e => e.target.closest("#nbrs tr[data-code]");
+  el.onclick = e => {
+    const tr = row(e); if (!tr) return;
+    const c = tr.dataset.code, t = performance.now(), dbl = e.detail > 1 || (c === lastRow.code && t - lastRow.t < 400);
+    lastRow = dbl ? {} : {code: c, t};
+    dbl ? select(c) : renderInfo(a, c);
+  };
 }
 
 function explain(a, b) {
