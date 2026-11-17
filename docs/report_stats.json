@@ -50,10 +50,10 @@
  "geography": {
   "top10_same_pref": 0.2753053637812002,
   "random_same_pref": 0.030883180399830013,
-  "top10_dist_median_km": 160.499453908784,
-  "random_dist_median_km": 505.1440431296235,
-  "top10_within_100km": 0.3878916622411046,
-  "random_within_100km": 0.07687306191857557
+  "top10_dist_median_km": 158.0882400958559,
+  "random_dist_median_km": 501.84263494612,
+  "top10_within_100km": 0.38953797132235796,
+  "random_within_100km": 0.07632289686906071
  },
  "clusters": [
   {

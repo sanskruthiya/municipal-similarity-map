@@ -100,12 +100,22 @@ plt.tight_layout(); plt.savefig(os.path.join(FIG, "top10_domain_share.png")); pl
 
 # 5) 地理的な近さ
 geo = gpd.read_file(os.path.join(ROOT, "data", "geo", "muni_simplified.geojson")).to_crs(6933)
-cen = {c: (p.x, p.y) for c, p in zip(geo.code, geo.geometry.representative_point())}
-XY = np.array([cen[c] for c in codes]); idx = {c: i for i, c in enumerate(codes)}
-nd = np.array([np.linalg.norm(XY[idx[a["code"]]] - XY[idx[n["code"]]]) / 1000 for a in inc for n in a["neighbors"]])
+rp_ll = gpd.GeoSeries(geo.geometry.representative_point(), crs=geo.crs).to_crs(4326)
+cen = {c: (p.x, p.y) for c, p in zip(geo.code, rp_ll)}
+LL = np.radians(np.array([cen[c] for c in codes])); idx = {c: i for i, c in enumerate(codes)}
+
+
+def gc_km(i, j):
+    (l1, p1), (l2, p2) = LL[i].T, LL[j].T
+    h = np.sin((p2 - p1) / 2) ** 2 + np.cos(p1) * np.cos(p2) * np.sin((l2 - l1) / 2) ** 2
+    return 2 * 6371.0088 * np.arcsin(np.sqrt(h))
+
+
+pi = np.array([(idx[a["code"]], idx[n["code"]]) for a in inc for n in a["neighbors"]])
+nd = gc_km(pi[:, 0], pi[:, 1])
 rng = np.random.default_rng(0)
 rp = rng.integers(0, len(codes), (20000, 2)); rp = rp[rp[:, 0] != rp[:, 1]]
-rd = np.linalg.norm(XY[rp[:, 0]] - XY[rp[:, 1]], axis=1) / 1000
+rd = gc_km(rp[:, 0], rp[:, 1])
 same = np.mean([np.mean([by[n["code"]]["pref"] == a["pref"] for n in a["neighbors"]]) for a in inc])
 pc = Counter(a["pref"] for a in inc); N = len(inc)
 stats["geography"] = {"top10_same_pref": float(same), "random_same_pref": sum(c * (c - 1) for c in pc.values()) / (N * (N - 1)),
