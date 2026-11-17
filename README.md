@@ -5,7 +5,7 @@
 1. 各市区町村に **統計的に似ている市区町村 Top10** を提示
 2. 類似関係を3次元に圧縮して **知覚的に均等な色空間（OKLab）** に写し、「似ている市区町村ほど似た色」になる地図を作成
 
-するプロジェクトです。
+するプロジェクトです。手法の妥当性・感度分析・類型・限界は **[検証レポート](docs/report.md)** にまとめています。
 
 ![UMAP→OKLab](output/map_umap_oklab.png)
 
@@ -20,6 +20,8 @@ cd web && python3 -m http.server 8765
 - 地図・3D散布図・検索で市区町村を選ぶと、類似Top10（地図上で枠線表示）と指標プロファイルを表示
 - 類似リストの行をクリックすると、2地域の指標を並べて比較
 - 各市区町村の「Top10の安定度」と、感度分析の結果一覧（「感度分析」欄）を表示
+- 類似リストの行をクリックすると「似ている点・違う点」も表示（距離²の分野別内訳、両方とも同じ向きに目立つ指標、距離への寄与が大きい指標）。行を選ぶ前は、その地域の特徴的な指標を表示
+- 「表示: タイル（等面積）」で、1市区町村＝1六角形のタイル地図に切り替え（面積の大きい町村が見た目を支配しない）
 
 ## データ
 
@@ -129,10 +131,13 @@ python3 scripts/02_build_features.py   # ksj_features.csv があれば立地・�
 python3 scripts/03_embed.py       # → web/data/attributes.json, data/processed/
 python3 scripts/04_static_maps.py # → output/*.png
 python3 scripts/07_sensitivity.py # → data/processed/sensitivity.json, web/data/sensitivity.json
+python3 scripts/08_tile_layout.py # → web/data/tiles.json（六角形タイル地図）
+python3 scripts/09_report_figures.py # → docs/figures/*.png, docs/report_stats.json
 npx mapshaper data/geo/muni_simplified.geojson -simplify 25% keep-shapes -o format=topojson quantization=100000 web/data/muni.topojson
 ```
 
-## 今後（Phase 3以降）
+## 今後
 
-- 面積の偏りを補うタイル型カルトグラム表示
 - 学校・商業施設などへのアクセス指標の追加
+- 小規模町村で振れやすい人口当たり指標（診療所・医師・飲食店など）の平滑化（経験ベイズ縮小など）
+- 時系列（2010→2020）での類型の変化
