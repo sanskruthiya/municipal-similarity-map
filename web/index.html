@@ -40,7 +40,7 @@
   <div id="map"><div id="hover"></div></div>
   <div id="side">
     <h1>市区町村 統計類似色マップ</h1>
-    <div class="note">43指標（人口・都市構造・産業・所得教育・住宅・生活利便）を標準化し、3次元に圧縮して色に変換。<b>色が近い＝統計的傾向が近い</b>（色そのものに意味はありません）。</div>
+    <div class="note"><span id="nind">49</span>指標（人口・都市構造・産業・所得教育・住宅・生活利便・立地土地利用）を標準化し、3次元に圧縮して色に変換。<b>色が近い＝統計的傾向が近い</b>（色そのものに意味はありません）。</div>
     <div class="ctrl">
       <label>配色: <select id="mode">
         <option value="umap_oklab">UMAP → OKLab（推奨）</option>
@@ -58,13 +58,14 @@
     <div class="note">3D散布図は選択中の手法の埋め込み空間（ドラッグで回転・クリックで選択）。</div>
     <div id="info"><p class="note">地図または散布図をクリックすると、類似する市区町村トップ10と指標プロファイルを表示します。</p></div>
     <details><summary>手法と検証指標</summary><div id="method" class="note"></div></details>
-    <p class="note">出典: e-Stat「社会・人口統計体系 市区町村データ」・令和2年国勢調査、国土数値情報（行政区域 N03, 2024）を加工して作成</p>
+    <details><summary>感度分析（結果の頑健さ）</summary><div id="sens" class="note"></div></details>
+    <p class="note">出典: e-Stat「社会・人口統計体系 市区町村データ」・令和2年国勢調査（250mメッシュ人口を含む）、国土数値情報（行政区域 N03-2024, 駅別乗降客数 S12-23, 医療機関 P04-20, 土地利用3次メッシュ L03-a-21）を加工して作成</p>
   </div>
 </div>
 <script>
 const CLUSTER_COLORS = ["#1f77b4","#ff7f0e","#2ca02c","#d62728","#9467bd","#8c564b","#e377c2","#7f7f7f","#bcbd22","#17becf","#393b79","#e7ba52"];
 const EXCL = "#cccccc";
-let A, byCode = {}, IND, mode = "umap_oklab", selected = null, map;
+let A, byCode = {}, IND, mode = "umap_oklab", selected = null, map, SENS = null, BOUNDS = {};
 
 function color(a, m = mode) {
   if (a.excluded) return EXCL;
@@ -77,18 +78,22 @@ function fmt(v) {
   return x >= 1000 ? v.toFixed(0) : x >= 10 ? v.toFixed(1) : x >= 1 ? v.toFixed(2) : v.toFixed(3);
 }
 
-Promise.all([fetch("data/muni.topojson").then(r => r.json()), fetch("data/attributes.json").then(r => r.json())])
-.then(([topo, attrs]) => {
-  A = attrs; IND = A.meta.indicators;
+Promise.all([fetch("data/muni.topojson").then(r => r.json()), fetch("data/attributes.json").then(r => r.json()),
+  fetch("data/sensitivity.json").then(r => r.ok ? r.json() : null).catch(() => null)])
+.then(([topo, attrs, sens]) => {
+  A = attrs; IND = A.meta.indicators; SENS = sens;
+  document.getElementById("nind").textContent = IND.length;
   A.areas.forEach(a => byCode[a.code] = a);
   const gj = topojson.feature(topo, topo.objects[Object.keys(topo.objects)[0]]);
   gj.features.forEach(f => {
     const a = byCode[f.properties.code];
     if (!a) return;
+    const b = BOUNDS[a.code] = new maplibregl.LngLatBounds();
+    (f.geometry.type === "Polygon" ? [f.geometry.coordinates] : f.geometry.coordinates).forEach(p => p[0].forEach(c => b.extend(c)));
     for (const m of ["umap_oklab","pca_oklab","umap_rgb","pca_rgb","cluster"]) f.properties[m] = color(a, m);
   });
   document.getElementById("names").innerHTML = A.areas.map(a => `<option value="${label(a)}">`).join("");
-  initMap(gj); drawScatter(); drawMethod();
+  initMap(gj); drawScatter(); drawMethod(); drawSens();
 });
 
 function initMap(gj) {
@@ -133,10 +138,8 @@ function select(code, fly = true) {
   if (selected) setStates(selected, false);
   selected = code; setStates(code, true);
   if (fly) {
-    const f = map.querySourceFeatures("muni", { filter: ["==", ["get", "code"], code] });
-    const b = new maplibregl.LngLatBounds();
-    f.forEach(ft => (ft.geometry.type === "Polygon" ? [ft.geometry.coordinates] : ft.geometry.coordinates).forEach(p => p[0].forEach(c => b.extend(c))));
-    if (!b.isEmpty()) map.fitBounds(b, { padding: 120, maxZoom: 10, duration: 600 });
+    const b = BOUNDS[code];
+    if (b && !b.isEmpty()) map.fitBounds(b, { padding: 120, maxZoom: 10, duration: 600 });
   }
   renderInfo(a); drawScatter();
 }
@@ -155,6 +158,11 @@ function renderInfo(a, cmpCode = null) {
     h += `<tr data-code="${n.code}" style="${cmpCode === n.code ? "background:#ffd" : ""}"><td>${i + 1}</td><td><span class="swatch" style="background:${color(b)}"></span>${label(b)}</td><td>${n.d.toFixed(2)}</td><td>${n.sim.toFixed(1)}</td></tr>`;
   });
   h += `</table><div class="note">類似度 = 全ペア距離の中での近さの百分位（100が最も近い）。行クリックで指標比較、ダブルクリックでその自治体へ移動。</div>`;
+  const st = SENS && SENS.stability[a.code];
+  if (st != null) {
+    const lv = st >= 0.8 ? ["高", "#2a7"] : st >= 0.6 ? ["中", "#c90"] : ["低", "#c33"];
+    h += `<div class="note" id="stab">Top10の安定度: <b style="color:${lv[1]}">${(st * 100).toFixed(0)}%（${lv[0]}）</b> — 指標の80%をランダムに選んで${SENS.summary.n_boot}回再計算したとき、Top10が平均何件残るかの割合。低いほど、指標の選び方で類似先が入れ替わりやすい。</div>`;
+  }
   h += `<b>指標プロファイル</b>${cmp ? `（<span style="color:#d33">■${label(a)}</span> vs <span style="color:#36c">■${label(cmp)}</span>）` : ""}`;
   h += `<div class="note">バー: 全国中央値からの標準化偏差（±4でクリップ）。値は加工後の実数値。*は欠損を近傍補完。</div><table>`;
   let g = null;
@@ -210,6 +218,19 @@ function drawMethod() {
   ${row("dist_spearman_oklab_color", "距離順位相関（OKLab色）")}
   ${row("dist_spearman_rgb_color(perceptual)", "距離順位相関（RGB色）")}</table>
   <p>UMAPは近傍関係（似たもの同士）を、PCAは全体の距離関係をよく保ちます。${A.meta.excluded_note}（灰色表示）。</p>`;
+}
+
+function drawSens() {
+  const el = document.getElementById("sens");
+  if (!SENS) { el.textContent = "sensitivity.json がありません（scripts/07_sensitivity.py を実行）"; return; }
+  const S = SENS.summary;
+  let h = `<p>ベースライン（分野均等の重み・KNN補完・福島7町村除外・全指標）と比べて、条件を変えたときに各市区町村の類似Top${S.k}が平均何件一致するか。</p>
+  <table><tr><th>条件</th><th>平均一致率</th><th>半数以上一致</th></tr>`;
+  S.neighbor_variants.forEach(r => h += `<tr><td>${r.variant}</td><td>${(r.mean_overlap * 100).toFixed(0)}%</td><td>${(r.share_ge_half * 100).toFixed(0)}%</td></tr>`);
+  h += `</table><p>UMAPのパラメータ・乱数シードを変えたときの3次元配置（色）の変化（既定: n_neighbors=20, min_dist=0.3, seed=42）。</p>
+  <table><tr><th>n_nb</th><th>min_d</th><th>seed</th><th>Trust.</th><th>近傍一致(元空間)</th><th>近傍一致(既定)</th><th>距離相関(既定)</th></tr>`;
+  S.umap_variants.forEach(r => h += `<tr><td>${r.n_neighbors}</td><td>${r.min_dist}</td><td>${r.seed}</td><td>${r.trustworthiness}</td><td>${r.knn_overlap_vs_original}</td><td>${r.knn_overlap_vs_default_umap}</td><td>${r.dist_spearman_vs_default_umap}</td></tr>`);
+  el.innerHTML = h + `</table><p>大域的な配置（距離相関）は設定に頑健ですが、細かな近傍は設定で入れ替わります。個別の類似先は地図の色ではなく、元の${IND.length}次元で計算したTop10を参照してください。</p>`;
 }
 
 document.getElementById("mode").onchange = e => {

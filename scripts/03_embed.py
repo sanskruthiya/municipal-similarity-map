@@ -5,10 +5,10 @@ import pandas as pd
 from scipy.stats import spearmanr
 from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
-from sklearn.impute import KNNImputer
 from sklearn.manifold import trustworthiness
 from sklearn.neighbors import NearestNeighbors
 import umap
+from pipeline import load, disrupted, build_space
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 PROC = os.path.join(HERE, "..", "data", "processed")
@@ -17,46 +17,15 @@ os.makedirs(WEB, exist_ok=True)
 K = 10
 SEED = 42
 
-raw = pd.read_csv(os.path.join(PROC, "indicators_raw.csv"), dtype={"code": str}).set_index("code")
-areas = pd.read_csv(os.path.join(PROC, "areas.csv"), dtype={"code": str}).set_index("code")
-meta = json.load(open(os.path.join(PROC, "indicators_meta.json")))
+raw, areas, meta = load()
 keys = [m["key"] for m in meta]
 
 # --- 除外: 原発事故の避難指示等で2020年の統計が平常時と大きく異なる自治体（人口が2010年比で半分未満）
-ss = pd.read_csv(os.path.join(HERE, "..", "data", "raw", "ssds_municipal.csv"), dtype=str)
-pop = ss[ss.item == "A1101"].assign(v=lambda d: pd.to_numeric(d.value, errors="coerce")).pivot(index="area", columns="year", values="v")
-ratio = (pop["2020"] / pop["2010"].fillna(pop["2015"])).reindex(raw.index)
-excluded = ratio.index[(ratio < 0.5) | ~(pop["2020"].reindex(raw.index) > 0)]
+excluded = disrupted(raw)
 print("excluded:", list(areas.loc[excluded, "name"]))
-use = raw.drop(index=excluded)
 
-# --- 変換
-X = use.copy()
-for m in meta:
-    k, tr = m["key"], m["transform"]
-    x = X[k]
-    if tr == "log":
-        pos = x[x > 0]
-        X[k] = np.log(x.clip(lower=0) + pos.quantile(0.01) / 2)
-    elif tr == "log1p":
-        X[k] = np.log1p(x)
-    elif tr == "sqrt":
-        X[k] = np.sqrt(x.clip(lower=0))
-
-# --- ロバスト標準化（中央値・IQR）と外れ値の切り詰め
-med = X.median()
-scale = (X.quantile(0.75) - X.quantile(0.25)) / 1.349
-scale = scale.where(scale > 0, X.std())
-Z = ((X - med) / scale).clip(-4, 4)
-
-# --- 欠損補完（所得: 政令市の区、住宅: 住宅・土地統計調査の非対象町村）
-imputed_mask = Z.isna()
-Z = pd.DataFrame(KNNImputer(n_neighbors=10, weights="distance").fit_transform(Z), index=Z.index, columns=Z.columns)
-
-# --- 分野ごとに寄与を揃える重み（各分野の重み二乗和 = 1）
-groups = pd.Series({m["key"]: m["group"] for m in meta})
-w = 1 / np.sqrt(groups.map(groups.value_counts()))
-Xw = Z * w
+# --- 変換 → ロバスト標準化 → KNN補完 → 分野ごとに寄与を揃える重み（各分野の重み二乗和 = 1）
+Xw, Z, imputed_mask = build_space(raw, meta, excluded)
 
 # --- 主成分分析（診断用）
 pca_full = PCA().fit(Xw)
