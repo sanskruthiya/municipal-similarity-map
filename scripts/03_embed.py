@@ -80,14 +80,26 @@ def to_hex(rgb):
 
 L_RANGE = (0.42, 0.92)
 AB_MAX = 0.20
-def color_oklab(E):
+# 色の向き: 埋め込みの回転・反転には任意性があるので、解釈しやすさのために
+# 「都市度の目安」（下記5指標のzスコア合計）が赤橙(OKLab色相 HUE_URBAN°)を向き、都市的なほど暗くなるよう揃える。
+# 回転・反転は距離を変えないので、類似関係の表現はそのまま。都市・農村の正式な区分ではない。
+URBAN_PROXY = {"pw_density": 1, "did_ratio": 1, "building_ratio": 1, "forest_ratio": -1, "car_commute": -1}
+HUE_URBAN = 50
+def urbanity(Z):
+    return sum(w * Z[k].to_numpy() for k, w in URBAN_PROXY.items())
+def color_oklab(E, urb):
     """等方スケーリング: 3軸を同じ倍率で OKLab に写すので、埋め込み空間の距離比が色差に保たれる。
     埋め込みを主軸回転し、分散最大の2軸を色相平面(a,b)、第3軸を明度 L に割り当てる。"""
     E = E - np.median(E, axis=0)
     E = PCA(n_components=3).fit_transform(E)
     span = np.percentile(E, 98, axis=0) - np.percentile(E, 2, axis=0)
     s = min(2 * AB_MAX / span[0], (L_RANGE[1] - L_RANGE[0]) / span[2])
-    lab = np.stack([np.mean(L_RANGE) + s * E[:, 2], s * E[:, 0], s * E[:, 1]], -1)
+    ab = E[:, :2] * [1, -1]
+    d = np.linalg.lstsq(np.c_[ab, np.ones(len(ab))], urb, rcond=None)[0][:2]
+    th = np.radians(HUE_URBAN) - np.arctan2(d[1], d[0])
+    ab = ab @ np.array([[np.cos(th), -np.sin(th)], [np.sin(th), np.cos(th)]]).T
+    Lc = -np.sign(np.corrcoef(E[:, 2], urb)[0, 1]) * E[:, 2]
+    lab = np.stack([np.mean(L_RANGE) + s * Lc, s * ab[:, 0], s * ab[:, 1]], -1)
     lab[:, 0] = lab[:, 0].clip(*L_RANGE)
     lab = gamut_clip(lab)
     return lab, to_hex(lin_to_srgb(oklab_to_linrgb(lab)))
@@ -110,8 +122,9 @@ def dist_corr(A, B):
 
 X_np = Xw.to_numpy()
 colors, metrics = {}, {}
+urb = urbanity(Z.loc[codes])
 for name, E in emb.items():
-    lab, hx = color_oklab(E)
+    lab, hx = color_oklab(E, urb)
     colors[f"{name}_oklab"] = hx
     rgb, hx2 = color_rgb_naive(E)
     colors[f"{name}_rgb"] = hx2
