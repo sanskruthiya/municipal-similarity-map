@@ -584,7 +584,7 @@ function phr(i, up, ...areas) {
 const quote = xs => xs.map(t => `「${t}」`).join("");
 const typeOf = a => TYPES[a.cluster] || "C" + a.cluster;
 const isImp = (o, i) => !!(o.imputed && o.imputed.includes(IND[i].key));
-const IMP_NOTE = `（挙げた指標の一部は統計の欠損を、ほかの指標が似た市区町村の値から推定して補っています）`;
+const IMP_NOTE = `（挙げた指標の一部は、統計が欠けているため、ほかの指標が似た市区町村の値から推定しています）`;
 const proseNote = () => `${IND.length}指標の数値を決まった文型で言い換えた要約です。似ている理由（因果関係）を示すものではありません。`;
 
 // 全国中央値からの偏差が大きい指標を、同じ分野から2つまでに絞って選ぶ
