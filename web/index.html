@@ -114,6 +114,10 @@ kbd { font: 11px var(--sans); color: var(--mut); border: 1px solid var(--line2);
 .card:hover .go, .card.on .go { opacity: 1; }
 .stab { display: inline-flex; align-items: center; gap: 6px; }
 .note { color: var(--mut); font-size: 11.5px; line-height: 1.6; }
+.lead { margin: 0 0 14px; font-size: 13px; line-height: 1.75; color: var(--tx); }
+.prose { margin: 0 0 14px; padding: 12px 14px; border: 1px solid var(--line); border-left: 3px solid var(--line2); border-radius: 10px; background: rgba(255,255,255,.025); }
+.prose p { margin: 0; font-size: 13px; line-height: 1.8; }
+.prose .pn { margin-top: 6px; font-size: 11px; line-height: 1.5; color: var(--mut); }
 
 .vs { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
 .vs .who { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 15px; }
@@ -277,7 +281,7 @@ const GROUP_COLORS = ["#6ea8ff", "#ff9f6e", "#7bd88f", "#ff7a8a", "#c79bff", "#5
 // k-means 12類型の解釈（docs/report.md 第7節）
 const TYPES = { 9: "大都市の都心", 1: "大都市圏の鉄道沿線の郊外", 5: "大都市の周辺区・工業都市", 11: "大都市圏の外側の郊外", 6: "地方の中核都市",
   0: "製造業のある地方都市", 7: "平地の農村・兼業地域", 2: "高齢化の進む地方の小都市", 3: "病院の少ない農山村", 8: "過疎化の進む山間の町村",
-  10: "北海道などの広域の農業町村", 4: "離島" };
+  10: "北海道などの広域の農業町村", 4: "離島・山あいの観光地などの小さな町村" };
 const LABEL_MINZOOM = 7;  // これより拡大したときだけ市区町村名を表示
 const EXAMPLES = ["柏市", "渋谷区", "軽井沢町", "札幌市中央区", "那覇市", "与那国町"];
 
@@ -513,9 +517,111 @@ function traits(a) {
 }
 const shortLabel = s => s.replace(/[（(].*?[）)]/g, "");
 
+/* ---- ルールベースの説明文: 指標ごとの「高い/低い」の言い方を文型に当てはめる ---- */
+const PHRASE = {
+  pop_density: ["可住地の人口密度が高い", "可住地の人口密度が低い"],
+  child_ratio: ["子どもの割合が高い", "子どもの割合が低い"],
+  elderly_ratio: ["高齢化が進んでいる", "高齢者の割合が低い"],
+  pop_change: ["人口の伸びが大きい", "人口の減少が大きい"],
+  proj_change_2050: ["将来の人口減少が小さいと推計されている", "将来の人口減少が大きいと推計されている"],
+  foreign_ratio: ["外国人住民が多い", "外国人住民が少ない"],
+  natural_change: ["出生が死亡に比べて多い", "死亡が出生を大きく上回っている"],
+  net_migration: ["転入が転出を上回っている", "転出が転入を上回っている"],
+  mobility: ["転入・転出による人の入れ替わりが多い", "転入・転出による人の入れ替わりが少ない"],
+  unmarried: ["未婚の人の割合が高い", "未婚の人の割合が低い"],
+  single_hh: ["一人暮らしの世帯が多い", "一人暮らしの世帯が少ない"],
+  elderly_single_hh: ["一人暮らしの高齢者が多い", "一人暮らしの高齢者が少ない"],
+  hh_size: ["1世帯あたりの人数が多い", "1世帯あたりの人数が少ない"],
+  day_night: ["昼間に通勤・通学で人が集まる", "昼間は通勤・通学で人が出ていく"],
+  did_ratio: ["人口集中地区に住む人が多い", "人口集中地区に住む人が少ない"],
+  out_commute: ["他の市区町村へ通勤する人が多い", "地元で働く人が多い"],
+  rail_commute: ["鉄道で通勤・通学する人が多い", "鉄道で通勤・通学する人が少ない"],
+  car_commute: ["車で通勤・通学する人が多い", "車で通勤・通学する人が少ない"],
+  bike_commute: ["自転車で通勤・通学する人が多い", "自転車で通勤・通学する人が少ない"],
+  forest_ratio: ["森林が多い", "森林が少ない"],
+  primary_ind: ["農林漁業で働く人が多い", "農林漁業で働く人が少ない"],
+  secondary_ind: ["製造業・建設業で働く人が多い", "製造業・建設業で働く人が少ない"],
+  unemployment: ["失業率が高い", "失業率が低い"],
+  female_lfpr: ["働く女性の割合が高い", "働く女性の割合が低い"],
+  elderly_workers: ["65歳以上で働く人が多い", "65歳以上で働く人が少ない"],
+  regular_emp: ["正規雇用の割合が高い", "正規雇用の割合が低い"],
+  jobs_per_capita: ["人口に比べて働く場所が多い", "人口に比べて働く場所が少ない"],
+  emp_manufacturing: ["製造業の職場が多い", "製造業の職場が少ない"],
+  emp_info_finance_prof: ["情報通信・金融・専門サービスの職場が多い", "情報通信・金融・専門サービスの職場が少ない"],
+  emp_hospitality: ["宿泊・飲食の職場が多い", "宿泊・飲食の職場が少ない"],
+  emp_health_welfare: ["医療・福祉の職場が多い", "医療・福祉の職場が少ない"],
+  income: ["所得水準が高い", "所得水準が低い"],
+  univ_grad: ["大学・大学院卒の割合が高い", "大学・大学院卒の割合が低い"],
+  low_edu: ["最終学歴が中学校までの人の割合が高い", "最終学歴が中学校までの人の割合が低い"],
+  owner_ratio: ["持ち家が多い", "持ち家が少ない"],
+  private_rent_ratio: ["民間の賃貸住宅が多い", "民間の賃貸住宅が少ない"],
+  detached_ratio: ["一戸建てが多い", "一戸建てが少ない"],
+  highrise_ratio: ["高層マンションに住む世帯が多い", "高層マンションに住む世帯が少ない"],
+  retail_pc: ["人口あたりの小売店が多い", "人口あたりの小売店が少ない"],
+  restaurant_pc: ["人口あたりの飲食店が多い", "人口あたりの飲食店が少ない"],
+  doctors_pc: ["人口あたりの医師が多い", "人口あたりの医師が少ない"],
+  clinics_pc: ["人口あたりの診療所が多い", "人口あたりの診療所が少ない"],
+  beds_pc: ["人口あたりの病床が多い", "人口あたりの病床が少ない"],
+  pw_density: ["住まいの周りの人口密度が高い", "住まいの周りの人口密度が低い"],
+  station_dist: ["最寄り駅が遠い", "最寄り駅が近い"],
+  hospital_dist: ["最寄りの病院が遠い", "最寄りの病院が近い"],
+  agri_ratio: ["農地が多い", "農地が少ない"],
+  paddy_share: ["農地のうち水田が多い", "農地のうち畑が多い"],
+  building_ratio: ["市街地（建物用地）が広い", "市街地（建物用地）が狭い"],
+};
+const phr = (i, up) => (PHRASE[IND[i].key] || [shortLabel(IND[i].label) + "が高い", shortLabel(IND[i].label) + "が低い"])[up ? 0 : 1];
+const quote = xs => xs.map(t => `「${t}」`).join("");
+const typeOf = a => TYPES[a.cluster] || "C" + a.cluster;
+const isImp = (o, i) => !!(o.imputed && o.imputed.includes(IND[i].key));
+const proseNote = () => `${IND.length}指標の数値を決まった文型で言い換えた要約です。似ている理由（因果関係）を示すものではありません。`;
+
+// 全国中央値からの偏差が大きい指標を、同じ分野から2つまでに絞って選ぶ
+function salient(a, n = 3, min = 1) {
+  const per = {};
+  return IND.map((d, i) => ({ i, s: Math.abs(a.z[i]) })).filter(x => x.s >= min).sort((x, y) => y.s - x.s)
+    .filter(x => (per[IND[x.i].group] = (per[IND[x.i].group] || 0) + 1) <= 2).slice(0, n);
+}
+
+function describeArea(a) {
+  const top = salient(a);
+  const s = stabInfo(a.code);
+  let t = `${esc(a.name)}は「${esc(typeOf(a))}」に分類される地域です。`;
+  t += top.length ? `全国の市区町村と比べると、${esc(quote(top.map(x => phr(x.i, a.z[x.i] > 0))))}点が目立ちます。`
+    : `多くの指標が全国の中央値に近い地域です。`;
+  if (s) t += s.lv[0] === "高" ? `似ている市区町村 Top${A.meta.k} は、条件を変えて計算し直してもほとんど入れ替わりません。`
+    : s.lv[0] === "中" ? `似ている市区町村 Top${A.meta.k} は、条件を変えて計算し直すと一部が入れ替わります。`
+    : `似ている市区町村 Top${A.meta.k} は、条件を変えて計算し直すとかなり入れ替わるため、目安としてご覧ください。`;
+  return t;
+}
+
+function describePair(a, b, c, d2, byG, common, diff) {
+  const A_ = esc(a.name), B_ = esc(b.name);
+  const rank = a.neighbors.findIndex(n => n.code === b.code) + 1;
+  const cm = common.slice(0, 3);
+  const cites = [];
+  let t = a.cluster === b.cluster ? `${A_}と${B_}は、どちらも「${esc(typeOf(a))}」に分類されます。`
+    : `${A_}は「${esc(typeOf(a))}」、${B_}は「${esc(typeOf(b))}」と類型は異なりますが、${A_}に似ている市区町村の${rank}位です。`;
+  if (cm.length) { t += `特に、どちらも${esc(quote(cm.map(x => phr(x.i, a.z[x.i] > 0))))}点が共通しています。`; cites.push(...cm.map(x => x.i)); }
+  else t += `どちらも多くの指標が全国の中央値に近いことが、似ている主な理由です。`;
+  const kMax = byG.indexOf(Math.max(...byG)), kMin = byG.indexOf(Math.min(...byG));
+  t += `${IND.length}指標の差のうち、いちばん大きいのは「${esc(GROUPS[kMax])}」の分野（${pct(byG[kMax])}）で、いちばん小さいのは「${esc(GROUPS[kMin])}」の分野（${pct(byG[kMin])}）です。`;
+  const parts = [];
+  for (const o of [a, b]) {
+    const xs = diff.slice(0, 3).filter(x => x.s / d2 >= .05 && (a.z[x.i] > b.z[x.i]) === (o === a));
+    if (xs.length) { parts.push(`${esc(o.name)}のほうが${esc(quote(xs.map(x => phr(x.i, true))))}`); cites.push(...xs.map(x => x.i)); }
+  }
+  if (parts.length) t += `個別の指標では、${parts.join("、")}という違いがあります。`;
+  if (cites.some(i => isImp(a, i) || isImp(b, i))) t += `（挙げた指標の一部は、近隣の市区町村の値で補完しています）`;
+  return t;
+}
+
+function prose(text, col) {
+  return `<div class="prose" style="border-left-color:${col}"><p>${text}</p><p class="pn">${proseNote()}</p></div>`;
+}
+
 function renderLeft(a) {
   const t = traits(a);
-  let h = `<div class="sec-h"><h3>似ている市区町村 Top${A.meta.k}</h3><small>クリックで比較 · ⤴で移動</small></div><div class="cards">`;
+  let h = `<p class="lead">${describeArea(a)}</p><div class="sec-h"><h3>似ている市区町村 Top${A.meta.k}</h3><small>クリックで比較 · ⤴で移動</small></div><div class="cards">`;
   a.neighbors.forEach((n, i) => {
     const b = byCode[n.code];
     const dist = CENT[a.code] && CENT[n.code] ? km(CENT[a.code], CENT[n.code]) : null;
@@ -564,6 +670,7 @@ function renderRight(a) {
   let h = `<div class="vs"><span class="who"><span class="sw" style="background:${color(a)}"></span>${esc(a.name)}</span><span class="x">×</span>
     <span class="who"><span class="sw" style="background:${color(b)}"></span>${esc(b.name)}</span>
     <span class="chip num" style="margin-left:auto">${a.neighbors.findIndex(n => n.code === b.code) + 1}位 · 距離 ${a.neighbors.find(n => n.code === b.code).d.toFixed(2)}</span></div>
+  ${prose(describePair(a, b, c, d2, byG, common, diff), color(b))}
   <div class="cmpgrid">
     <div class="box"><h4>共通の特徴<span class="badge c">どちらも全国中央値から同じ向きに離れている</span></h4>
       ${common.length ? common.map(x => `<div class="li"><span>${esc(shortLabel(IND[x.i].label))}<span class="${a.z[x.i] > 0 ? "up" : "dn"}">　どちらも${a.z[x.i] > 0 ? "高い" : "低い"}</span></span><span class="r num">${fmt(a.raw[x.i])} / ${fmt(b.raw[x.i])}</span></div>`).join("") : `<p class="note">該当なし（どちらも全国平均的）</p>`}
