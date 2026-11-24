@@ -584,6 +584,7 @@ function phr(i, up, ...areas) {
 const quote = xs => xs.map(t => `「${t}」`).join("");
 const typeOf = a => TYPES[a.cluster] || "C" + a.cluster;
 const isImp = (o, i) => !!(o.imputed && o.imputed.includes(IND[i].key));
+const IMP_NOTE = `（挙げた指標の一部は統計の欠損を、ほかの指標が似た市区町村の値から推定して補っています）`;
 const proseNote = () => `${IND.length}指標の数値を決まった文型で言い換えた要約です。似ている理由（因果関係）を示すものではありません。`;
 
 // 全国中央値からの偏差が大きい指標を、同じ分野から2つまでに絞って選ぶ
@@ -599,6 +600,7 @@ function describeArea(a) {
   let t = `${esc(a.name)}は「${esc(typeOf(a))}」に分類される地域です。`;
   t += top.length ? `全国の市区町村と比べると、${esc(quote(top.map(x => phr(x.i, a.z[x.i] > 0, a))))}点が目立ちます。`
     : `多くの指標が全国の中央値に近い地域です。`;
+  if (top.some(x => isImp(a, x.i))) t += IMP_NOTE;
   if (s) t += s.lv[0] === "高" ? `似ている市区町村 Top${A.meta.k} は、条件を変えて計算し直してもほとんど入れ替わりません。`
     : s.lv[0] === "中" ? `似ている市区町村 Top${A.meta.k} は、条件を変えて計算し直すと一部が入れ替わります。`
     : `似ている市区町村 Top${A.meta.k} は、条件を変えて計算し直すとかなり入れ替わるため、目安としてご覧ください。`;
@@ -622,7 +624,7 @@ function describePair(a, b, c, d2, byG, common, diff) {
     if (xs.length) { parts.push(`${esc(o.name)}のほうが${esc(quote(xs.map(x => phr(x.i, true))))}`); cites.push(...xs.map(x => x.i)); }
   }
   if (parts.length) t += `個別の指標では、${parts.join("、")}という違いがあります。`;
-  if (cites.some(i => isImp(a, i) || isImp(b, i))) t += `（挙げた指標の一部は、近隣の市区町村の値で補完しています）`;
+  if (cites.some(i => isImp(a, i) || isImp(b, i))) t += IMP_NOTE;
   return t;
 }
 
