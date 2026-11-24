@@ -569,7 +569,18 @@ const PHRASE = {
   paddy_share: ["農地のうち水田が多い", "農地のうち畑が多い"],
   building_ratio: ["市街地（建物用地）が広い", "市街地（建物用地）が狭い"],
 };
-const phr = (i, up) => (PHRASE[IND[i].key] || [shortLabel(IND[i].label) + "が高い", shortLabel(IND[i].label) + "が低い"])[up ? 0 : 1];
+// 符号のある率は全国中央値が負なので、z が高くても実数は負のことがある: [実数が正, 実数が負, 比較の言い方]
+const SIGNED = {
+  pop_change: ["人口が増えている", "人口の減少が全国の中央値より小さい", "人口増減率が高い"],
+  proj_change_2050: ["将来も人口が増えると推計されている", "将来の人口減少が全国の中央値より小さいと推計されている", "将来推計の人口変化率が高い"],
+  natural_change: ["出生が死亡を上回っている", "死亡超過が全国の中央値より小さい", "自然増減率が高い"],
+  net_migration: ["転入が転出を上回っている", "転出超過が全国の中央値より小さい", "社会増減率（転入−転出）が高い"],
+};
+function phr(i, up, ...areas) {
+  const k = IND[i].key, sg = SIGNED[k];
+  if (up && sg) return areas.length ? (areas.every(o => o.raw[i] > 0) ? sg[0] : sg[1]) : sg[2];
+  return (PHRASE[k] || [shortLabel(IND[i].label) + "が高い", shortLabel(IND[i].label) + "が低い"])[up ? 0 : 1];
+}
 const quote = xs => xs.map(t => `「${t}」`).join("");
 const typeOf = a => TYPES[a.cluster] || "C" + a.cluster;
 const isImp = (o, i) => !!(o.imputed && o.imputed.includes(IND[i].key));
@@ -586,7 +597,7 @@ function describeArea(a) {
   const top = salient(a);
   const s = stabInfo(a.code);
   let t = `${esc(a.name)}は「${esc(typeOf(a))}」に分類される地域です。`;
-  t += top.length ? `全国の市区町村と比べると、${esc(quote(top.map(x => phr(x.i, a.z[x.i] > 0))))}点が目立ちます。`
+  t += top.length ? `全国の市区町村と比べると、${esc(quote(top.map(x => phr(x.i, a.z[x.i] > 0, a))))}点が目立ちます。`
     : `多くの指標が全国の中央値に近い地域です。`;
   if (s) t += s.lv[0] === "高" ? `似ている市区町村 Top${A.meta.k} は、条件を変えて計算し直してもほとんど入れ替わりません。`
     : s.lv[0] === "中" ? `似ている市区町村 Top${A.meta.k} は、条件を変えて計算し直すと一部が入れ替わります。`
@@ -601,7 +612,7 @@ function describePair(a, b, c, d2, byG, common, diff) {
   const cites = [];
   let t = a.cluster === b.cluster ? `${A_}と${B_}は、どちらも「${esc(typeOf(a))}」に分類されます。`
     : `${A_}は「${esc(typeOf(a))}」、${B_}は「${esc(typeOf(b))}」と類型は異なりますが、${A_}に似ている市区町村の${rank}位です。`;
-  if (cm.length) { t += `特に、どちらも${esc(quote(cm.map(x => phr(x.i, a.z[x.i] > 0))))}点が共通しています。`; cites.push(...cm.map(x => x.i)); }
+  if (cm.length) { t += `特に、どちらも${esc(quote(cm.map(x => phr(x.i, a.z[x.i] > 0, a, b))))}点が共通しています。`; cites.push(...cm.map(x => x.i)); }
   else t += `どちらも多くの指標が全国の中央値に近いことが、似ている主な理由です。`;
   const kMax = byG.indexOf(Math.max(...byG)), kMin = byG.indexOf(Math.min(...byG));
   t += `${IND.length}指標の差のうち、いちばん大きいのは「${esc(GROUPS[kMax])}」の分野（${pct(byG[kMax])}）で、いちばん小さいのは「${esc(GROUPS[kMin])}」の分野（${pct(byG[kMin])}）です。`;
