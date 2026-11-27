@@ -40,6 +40,7 @@ a { color: #9cc7ff; }
 #about p { margin: 0 0 10px; color: var(--mut); font-size: 12.5px; }
 #about .row { display: flex; gap: 6px; flex-wrap: wrap; }
 #about .toggle { position: absolute; top: 10px; right: 10px; }
+#about:not(.min) { max-height: calc(100vh - 110px); overflow-y: auto; }
 #about.min { width: auto; padding: 10px 46px 10px 14px; }
 #about.min .body { display: none; }
 #about.min h1 { font-size: 14px; margin: 0; }
