@@ -455,7 +455,7 @@ function tyMembers(lv, id) { return A.areas.filter(a => tyOf(a) && tyOf(a)[lv ==
 // 類型の説明: 構成する市区町村の中央値（標準化値）で目立つ指標と、中央値に近い代表例
 function describeType(lv, id) {
   const ms = tyMembers(lv, id);
-  const med = IND.map((d, i) => { const v = ms.map(a => a.z[i]).sort((x, y) => x - y); return v[Math.floor(v.length / 2)]; });
+  const med = IND.map((d, i) => { const v = ms.map(a => a.z[i]).sort((x, y) => x - y), h = v.length >> 1; return v.length % 2 ? v[h] : (v[h - 1] + v[h]) / 2; });
   const top = salient({ z: med }, 4, .5);
   const ex = ms.map(a => ({ a, d: IND.reduce((s, d, i) => s + W[i] * (a.z[i] - med[i]) ** 2, 0) })).sort((x, y) => x.d - y.d).slice(0, 5).map(x => x.a.name);
   return { top, ex, n: ms.length, text: top.length ? `全国の市区町村と比べて、${quote(top.map(x => phr(x.i, med[x.i] > 0)))}地域が多い類型です。` : `多くの指標が全国の中央値に近い類型です。` };
