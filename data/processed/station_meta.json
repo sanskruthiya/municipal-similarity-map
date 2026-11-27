@@ -1,0 +1,290 @@
+[
+ {
+  "key": "pax",
+  "label": "乗降客数(人/日, 2022)",
+  "group": "駅・交通",
+  "transform": "log1p"
+ },
+ {
+  "key": "n_lines",
+  "label": "乗り入れ路線数",
+  "group": "駅・交通",
+  "transform": "log"
+ },
+ {
+  "key": "nearest_station_km",
+  "label": "隣の駅までの距離(km)",
+  "group": "駅・交通",
+  "transform": "log"
+ },
+ {
+  "key": "stations_2km",
+  "label": "2km以内の駅の数",
+  "group": "駅・交通",
+  "transform": "log1p"
+ },
+ {
+  "key": "hospitals_2km",
+  "label": "2km以内の病院の数",
+  "group": "医療",
+  "transform": "log1p"
+ },
+ {
+  "key": "clinics_1km",
+  "label": "1km以内の診療所の数",
+  "group": "医療",
+  "transform": "log1p"
+ },
+ {
+  "key": "r0_density",
+  "label": "駅前0〜500m: 人口密度(人/km²)",
+  "group": "人口密度",
+  "transform": "log1p",
+  "ring": "r0"
+ },
+ {
+  "key": "r0_child",
+  "label": "駅前0〜500m: 15歳未満の割合",
+  "group": "年齢",
+  "transform": "none",
+  "ring": "r0"
+ },
+ {
+  "key": "r0_old",
+  "label": "駅前0〜500m: 65歳以上の割合",
+  "group": "年齢",
+  "transform": "none",
+  "ring": "r0"
+ },
+ {
+  "key": "r0_foreign",
+  "label": "駅前0〜500m: 外国人の割合",
+  "group": "外国人",
+  "transform": "sqrt",
+  "ring": "r0"
+ },
+ {
+  "key": "r0_single",
+  "label": "駅前0〜500m: 単身世帯の割合",
+  "group": "世帯",
+  "transform": "none",
+  "ring": "r0"
+ },
+ {
+  "key": "r0_young_single",
+  "label": "駅前0〜500m: 20代の単身世帯の割合",
+  "group": "世帯",
+  "transform": "sqrt",
+  "ring": "r0"
+ },
+ {
+  "key": "r0_old_single",
+  "label": "駅前0〜500m: 高齢単身世帯の割合",
+  "group": "世帯",
+  "transform": "none",
+  "ring": "r0"
+ },
+ {
+  "key": "r0_building",
+  "label": "駅前0〜500m: 建物用地の割合",
+  "group": "土地利用",
+  "transform": "none",
+  "ring": "r0"
+ },
+ {
+  "key": "r0_agri",
+  "label": "駅前0〜500m: 農地の割合",
+  "group": "土地利用",
+  "transform": "none",
+  "ring": "r0"
+ },
+ {
+  "key": "r0_forest",
+  "label": "駅前0〜500m: 森林・荒地の割合",
+  "group": "土地利用",
+  "transform": "none",
+  "ring": "r0"
+ },
+ {
+  "key": "r0_road",
+  "label": "駅前0〜500m: 道路・鉄道の割合",
+  "group": "土地利用",
+  "transform": "none",
+  "ring": "r0"
+ },
+ {
+  "key": "r0_other",
+  "label": "駅前0〜500m: 公園・学校などその他の用地の割合",
+  "group": "土地利用",
+  "transform": "none",
+  "ring": "r0"
+ },
+ {
+  "key": "r1_density",
+  "label": "徒歩圏500m〜1km: 人口密度(人/km²)",
+  "group": "人口密度",
+  "transform": "log1p",
+  "ring": "r1"
+ },
+ {
+  "key": "r1_child",
+  "label": "徒歩圏500m〜1km: 15歳未満の割合",
+  "group": "年齢",
+  "transform": "none",
+  "ring": "r1"
+ },
+ {
+  "key": "r1_old",
+  "label": "徒歩圏500m〜1km: 65歳以上の割合",
+  "group": "年齢",
+  "transform": "none",
+  "ring": "r1"
+ },
+ {
+  "key": "r1_foreign",
+  "label": "徒歩圏500m〜1km: 外国人の割合",
+  "group": "外国人",
+  "transform": "sqrt",
+  "ring": "r1"
+ },
+ {
+  "key": "r1_single",
+  "label": "徒歩圏500m〜1km: 単身世帯の割合",
+  "group": "世帯",
+  "transform": "none",
+  "ring": "r1"
+ },
+ {
+  "key": "r1_young_single",
+  "label": "徒歩圏500m〜1km: 20代の単身世帯の割合",
+  "group": "世帯",
+  "transform": "sqrt",
+  "ring": "r1"
+ },
+ {
+  "key": "r1_old_single",
+  "label": "徒歩圏500m〜1km: 高齢単身世帯の割合",
+  "group": "世帯",
+  "transform": "none",
+  "ring": "r1"
+ },
+ {
+  "key": "r1_building",
+  "label": "徒歩圏500m〜1km: 建物用地の割合",
+  "group": "土地利用",
+  "transform": "none",
+  "ring": "r1"
+ },
+ {
+  "key": "r1_agri",
+  "label": "徒歩圏500m〜1km: 農地の割合",
+  "group": "土地利用",
+  "transform": "none",
+  "ring": "r1"
+ },
+ {
+  "key": "r1_forest",
+  "label": "徒歩圏500m〜1km: 森林・荒地の割合",
+  "group": "土地利用",
+  "transform": "none",
+  "ring": "r1"
+ },
+ {
+  "key": "r1_road",
+  "label": "徒歩圏500m〜1km: 道路・鉄道の割合",
+  "group": "土地利用",
+  "transform": "none",
+  "ring": "r1"
+ },
+ {
+  "key": "r1_other",
+  "label": "徒歩圏500m〜1km: 公園・学校などその他の用地の割合",
+  "group": "土地利用",
+  "transform": "none",
+  "ring": "r1"
+ },
+ {
+  "key": "r2_density",
+  "label": "周辺1〜2km: 人口密度(人/km²)",
+  "group": "人口密度",
+  "transform": "log1p",
+  "ring": "r2"
+ },
+ {
+  "key": "r2_child",
+  "label": "周辺1〜2km: 15歳未満の割合",
+  "group": "年齢",
+  "transform": "none",
+  "ring": "r2"
+ },
+ {
+  "key": "r2_old",
+  "label": "周辺1〜2km: 65歳以上の割合",
+  "group": "年齢",
+  "transform": "none",
+  "ring": "r2"
+ },
+ {
+  "key": "r2_foreign",
+  "label": "周辺1〜2km: 外国人の割合",
+  "group": "外国人",
+  "transform": "sqrt",
+  "ring": "r2"
+ },
+ {
+  "key": "r2_single",
+  "label": "周辺1〜2km: 単身世帯の割合",
+  "group": "世帯",
+  "transform": "none",
+  "ring": "r2"
+ },
+ {
+  "key": "r2_young_single",
+  "label": "周辺1〜2km: 20代の単身世帯の割合",
+  "group": "世帯",
+  "transform": "sqrt",
+  "ring": "r2"
+ },
+ {
+  "key": "r2_old_single",
+  "label": "周辺1〜2km: 高齢単身世帯の割合",
+  "group": "世帯",
+  "transform": "none",
+  "ring": "r2"
+ },
+ {
+  "key": "r2_building",
+  "label": "周辺1〜2km: 建物用地の割合",
+  "group": "土地利用",
+  "transform": "none",
+  "ring": "r2"
+ },
+ {
+  "key": "r2_agri",
+  "label": "周辺1〜2km: 農地の割合",
+  "group": "土地利用",
+  "transform": "none",
+  "ring": "r2"
+ },
+ {
+  "key": "r2_forest",
+  "label": "周辺1〜2km: 森林・荒地の割合",
+  "group": "土地利用",
+  "transform": "none",
+  "ring": "r2"
+ },
+ {
+  "key": "r2_road",
+  "label": "周辺1〜2km: 道路・鉄道の割合",
+  "group": "土地利用",
+  "transform": "none",
+  "ring": "r2"
+ },
+ {
+  "key": "r2_other",
+  "label": "周辺1〜2km: 公園・学校などその他の用地の割合",
+  "group": "土地利用",
+  "transform": "none",
+  "ring": "r2"
+ }
+]
