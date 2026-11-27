@@ -479,7 +479,11 @@ function renderLegend() {
     h += `<div class="tyfocus" style="border-left-color:${t.color}"><b>${esc(t.name)}</b>${lv === "minor" ? `<small style="margin:0 0 4px">${esc(TY.major[t.major].name)}</small>` : ""}<div>${esc(d.text)}</div>
       <small>中央値に近い例: ${d.ex.map(esc).join("、")}<br>分類の安定度 ${t.stability.toFixed(2)}（${t.stability >= .6 ? "安定" : t.stability >= .35 ? "やや不安定" : "不安定。境目があいまいな類型"}）</small></div>`;
   }
+  const prev = el.querySelector(".tylist"), top = prev ? prev.scrollTop : 0, foc = document.activeElement && document.activeElement.dataset && document.activeElement.dataset.ty;
   el.innerHTML = h;
+  const list = el.querySelector(".tylist");
+  if (list) list.scrollTop = top;
+  if (foc) { const b = el.querySelector(`[data-ty="${foc}"]`); b && b.focus({ preventScroll: true }); }
   el.querySelectorAll("[data-ty]").forEach(b => b.onclick = () => {
     const [lv, id] = b.dataset.ty.split(":"), k = [lv, +id];
     tyFocus = tyFocus && tyFocus[0] === k[0] && tyFocus[1] === k[1] ? null : k;
