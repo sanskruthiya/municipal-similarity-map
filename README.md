@@ -140,6 +140,22 @@ python3 scripts/11_typology.py   # → web/data/typology.json, data/processed/ty
 npx mapshaper data/geo/muni_simplified.geojson -simplify 25% keep-shapes -o format=topojson quantization=100000 web/data/muni.topojson
 ```
 
+## 駅圏版（`web/stations.html`）
+
+全国 9,051 駅（同じ駅グループコード `S12_001g` の駅は 1 駅にまとめる）の周りを、駅前 0〜500m・徒歩圏 500m〜1km・周辺 1〜2km の 3 つの輪に分けて集計し、42 指標（輪ごとに人口密度・年齢・外国人・世帯・土地利用の 12 指標 × 3 ＋ 乗降客数・路線数・隣の駅までの距離・2km 以内の駅数・病院数・診療所数）で比べます。市区町村版とは別の指標セットで、標準化・補完・分野の重み・距離の計算は市区町村版と同じです。
+
+- 駅前 0〜500m だけは最寄り駅に割り当て、外側の輪は重なりを許す
+- 外側の輪が重なる駅どうしは似て当然なので、Top10 は既定で 2km 以内の駅を除外（画面左上の切り替えで含められる。`?near=1`）
+- 駅を選ぶと Top10、駅の特徴と 2 駅の共通点・違いを説明する文章（市区町村版と同じルールベース）、指標プロファイルを表示。選んだ駅は URL（`stations.html#002984` など）に入る
+- 観光地か、通勤の目的地か出発地かといった移動目的は指標に含まれない
+
+```bash
+python3 scripts/12_fetch_station.py      # 土地利用 100m メッシュ（L03-b-21）を取得
+python3 scripts/13_station_features.py   # 駅圏の指標 → data/processed/station_features.csv
+python3 scripts/14_station_similarity.py # Top10（2km 以内を除く／除かない）
+python3 scripts/15_station_embed.py      # UMAP → OKLab 色、web/data/stations.json
+```
+
 ## 今後
 
 - 学校・商業施設などへのアクセス指標の追加
