@@ -26,7 +26,10 @@ LU = {100: "agri", 200: "agri", 500: "forest", 600: "forest", 700: "building", 9
 
 def load_stations():
     s = gpd.read_file(f"zip://{RAW}/ksj/S12-23_GML.zip!UTF-8/S12-23_NumberOfPassengers.shp", encoding="utf-8")
-    s["pax"] = np.where(s["S12_051"] == 1, s["S12_053"].fillna(0), np.nan)
+    # 2022年: S12_050 = 重複コード（2 は他路線の公表値に含まれる）、S12_051 = データ有無（1 があり）、S12_053 = 乗降客数
+    has = s["S12_051"] == 1
+    s["pax"] = np.where(has & (s["S12_050"] == 1), s["S12_053"].fillna(0), np.nan)
+    s["pax_dup"] = np.where(has & (s["S12_050"] == 2), s["S12_053"].fillna(0), np.nan)
     p = s.to_crs(6933)
     s["geometry"] = p.geometry.centroid
     s = s.set_geometry("geometry").set_crs(6933, allow_override=True)
@@ -37,7 +40,7 @@ def load_stations():
         "lines": g["S12_003"].agg(lambda x: "・".join(dict.fromkeys(x))),
         "n_lines": g["S12_003"].nunique(),
         "shinkansen": g["S12_005"].agg(lambda x: int((x == 1).any())),
-        "pax": g["pax"].agg(lambda x: x.sum() if x.notna().any() else np.nan),
+        "pax": g["pax"].agg(lambda x: x.sum() if x.notna().any() else np.nan).fillna(g["pax_dup"].max()),
         "x": g.geometry.apply(lambda x: x.x.mean()), "y": g.geometry.apply(lambda x: x.y.mean()),
     })
     pt = gpd.GeoSeries(gpd.points_from_xy(st.x, st.y), crs=6933).to_crs(4326)
@@ -108,7 +111,7 @@ def pop_mesh(rings, nst):
 
 def landuse(rings, nst):
     names = sorted(set(LU.values()))
-    agg = np.zeros((nst, 3, len(names) + 1))  # 最後の列は陸域セル数
+    agg = np.zeros((nst, 3, len(names) + 2))  # 最後の 2 列は陸域セル数と陸域面積（km²）
     lut = np.full(1700, -1)
     for k, v in LU.items():
         lut[k] = names.index(v)
@@ -124,6 +127,8 @@ def landuse(rings, nst):
         ok = c >= 0
         np.add.at(agg, (S[ok], R[ok], c[ok]), 1)
         np.add.at(agg, (S, R, len(names)), 1)
+        km2 = (dlat / 10 * np.pi / 180 * R_EARTH) * (dlon / 10 * np.pi / 180 * R_EARTH * np.cos(np.radians(lat)))
+        np.add.at(agg, (S, R, len(names) + 1), np.broadcast_to(km2, lat.shape)[P])
     return agg, names
 
 
@@ -163,7 +168,8 @@ if __name__ == "__main__":
     out = st.join(F)
     for r, tag in enumerate(("r0", "r1", "r2")):
         p = pd.DataFrame(P[:, r], columns=list(POP_COLS.values()), index=st.index)
-        land_km2 = L[:, r, -1] * 0.01
+        land_km2 = L[:, r, -1]
+        cells = L[:, r, len(lu_names)]
         out[f"{tag}_pop"] = p["pop"]
         out[f"{tag}_land_km2"] = land_km2
         out[f"{tag}_density"] = p["pop"] / np.where(land_km2 > 0, land_km2, np.nan)
@@ -172,6 +178,6 @@ if __name__ == "__main__":
                             ("single", "hh1", "hh"), ("young_single", "hh1_20s", "hh"), ("old_single", "hh1_old", "hh")):
             out[f"{tag}_{k}"] = (p[num] / p[den].replace(0, np.nan)).clip(upper=1).where(enough)
         for i, n in enumerate(lu_names):
-            out[f"{tag}_{n}"] = L[:, r, i] / np.where(L[:, r, -1] > 0, L[:, r, -1], np.nan)
+            out[f"{tag}_{n}"] = L[:, r, i] / np.where(cells > 0, cells, np.nan)
     out.to_csv(OUT)
     print(out.describe().T.to_string())
