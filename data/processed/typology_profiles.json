@@ -1,0 +1,1519 @@
+[
+ {
+  "level": "major",
+  "id": 0,
+  "major": 0,
+  "n": 48,
+  "stability": 0.902,
+  "pop_total": 8597382,
+  "features": {
+   "day_night": 4.0,
+   "highrise_ratio": 4.0,
+   "car_commute": -3.82,
+   "income": 3.76,
+   "jobs_per_capita": 3.31,
+   "detached_ratio": -3.29,
+   "single_hh": 3.1,
+   "doctors_pc": 3.07
+  },
+  "central": [
+   "愛知県名古屋市中村区",
+   "大阪府大阪市福島区",
+   "神奈川県横浜市中区",
+   "京都府京都市中京区",
+   "京都府京都市下京区",
+   "大阪府大阪市天王寺区"
+  ],
+  "largest": [
+   "東京都江東区",
+   "東京都品川区",
+   "東京都新宿区",
+   "岡山県岡山市北区",
+   "宮城県仙台市青葉区",
+   "東京都豊島区"
+  ],
+  "prefs": {
+   "東京都": 13,
+   "大阪府": 8,
+   "愛知県": 6,
+   "京都府": 4
+  }
+ },
+ {
+  "level": "major",
+  "id": 1,
+  "major": 1,
+  "n": 188,
+  "stability": 0.798,
+  "pop_total": 39898565,
+  "features": {
+   "car_commute": -3.33,
+   "highrise_ratio": 3.06,
+   "rail_commute": 2.75,
+   "detached_ratio": -2.27,
+   "income": 2.16,
+   "building_ratio": 1.93,
+   "pop_density": 1.92,
+   "univ_grad": 1.92
+  },
+  "central": [
+   "神奈川県大和市",
+   "神奈川県相模原市南区",
+   "埼玉県さいたま市北区",
+   "東京都八王子市",
+   "千葉県松戸市",
+   "千葉県千葉市稲毛区"
+  ],
+  "largest": [
+   "東京都世田谷区",
+   "東京都練馬区",
+   "東京都大田区",
+   "東京都江戸川区",
+   "東京都足立区",
+   "千葉県船橋市"
+  ],
+  "prefs": {
+   "大阪府": 38,
+   "東京都": 32,
+   "神奈川県": 30,
+   "埼玉県": 19
+  }
+ },
+ {
+  "level": "major",
+  "id": 2,
+  "major": 2,
+  "n": 226,
+  "stability": 0.548,
+  "pop_total": 20964877,
+  "features": {
+   "rail_commute": 1.63,
+   "highrise_ratio": 1.6,
+   "car_commute": -1.48,
+   "did_ratio": 1.23,
+   "univ_grad": 1.11,
+   "pop_density": 1.08,
+   "building_ratio": 1.08,
+   "income": 1.07
+  },
+  "central": [
+   "埼玉県久喜市",
+   "愛知県一宮市",
+   "茨城県牛久市",
+   "兵庫県加古川市",
+   "埼玉県桶川市",
+   "愛知県春日井市"
+  ],
+  "largest": [
+   "神奈川県横須賀市",
+   "愛知県岡崎市",
+   "愛知県一宮市",
+   "奈良県奈良市",
+   "埼玉県川越市",
+   "滋賀県大津市"
+  ],
+  "prefs": {
+   "愛知県": 32,
+   "埼玉県": 28,
+   "大阪府": 23,
+   "奈良県": 18
+  }
+ },
+ {
+  "level": "major",
+  "id": 3,
+  "major": 3,
+  "n": 322,
+  "stability": 0.456,
+  "pop_total": 36799019,
+  "features": {
+   "highrise_ratio": 0.88,
+   "doctors_pc": 0.79,
+   "private_rent_ratio": 0.73,
+   "did_ratio": 0.73,
+   "child_ratio": 0.51,
+   "proj_change_2050": 0.51,
+   "pw_density": 0.49,
+   "beds_pc": 0.47
+  },
+  "central": [
+   "長野県上田市",
+   "香川県丸亀市",
+   "山口県防府市",
+   "三重県松阪市",
+   "栃木県足利市",
+   "埼玉県本庄市"
+  ],
+  "largest": [
+   "静岡県浜松市",
+   "鹿児島県鹿児島市",
+   "兵庫県姫路市",
+   "栃木県宇都宮市",
+   "愛媛県松山市",
+   "大分県大分市"
+  ],
+  "prefs": {
+   "静岡県": 20,
+   "福岡県": 19,
+   "長野県": 18,
+   "沖縄県": 18
+  }
+ },
+ {
+  "level": "major",
+  "id": 4,
+  "major": 4,
+  "n": 379,
+  "stability": 0.548,
+  "pop_total": 8760175,
+  "features": {
+   "hh_size": 1.03,
+   "emp_hospitality": -0.98,
+   "single_hh": -0.93,
+   "emp_manufacturing": 0.79,
+   "agri_ratio": 0.78,
+   "owner_ratio": 0.72,
+   "secondary_ind": 0.7,
+   "doctors_pc": -0.66
+  },
+  "central": [
+   "茨城県桜川市",
+   "香川県三豊市",
+   "栃木県益子町",
+   "福島県伊達市",
+   "茨城県常陸大宮市",
+   "福島県三春町"
+  ],
+  "largest": [
+   "石川県白山市",
+   "茨城県筑西市",
+   "静岡県島田市",
+   "新潟県三条市",
+   "富山県射水市",
+   "福井県坂井市"
+  ],
+  "prefs": {
+   "長野県": 26,
+   "茨城県": 24,
+   "福島県": 23,
+   "岐阜県": 19
+  }
+ },
+ {
+  "level": "major",
+  "id": 5,
+  "major": 5,
+  "n": 352,
+  "stability": 0.53,
+  "pop_total": 9126382,
+  "features": {
+   "elderly_single_hh": 0.87,
+   "natural_change": -0.72,
+   "elderly_ratio": 0.72,
+   "out_commute": -0.71,
+   "retail_pc": 0.66,
+   "low_edu": 0.62,
+   "pop_change": -0.61,
+   "elderly_workers": 0.61
+  },
+  "central": [
+   "大分県臼杵市",
+   "山口県長門市",
+   "岩手県一関市",
+   "群馬県沼田市",
+   "島根県大田市",
+   "秋田県大館市"
+  ],
+  "largest": [
+   "山形県鶴岡市",
+   "佐賀県唐津市",
+   "岩手県奥州市",
+   "岩手県一関市",
+   "鹿児島県鹿屋市",
+   "山形県酒田市"
+  ],
+  "prefs": {
+   "北海道": 53,
+   "鹿児島県": 19,
+   "高知県": 16,
+   "和歌山県": 13
+  }
+ },
+ {
+  "level": "major",
+  "id": 6,
+  "major": 6,
+  "n": 147,
+  "stability": 0.529,
+  "pop_total": 699199,
+  "features": {
+   "station_dist": 3.07,
+   "hospital_dist": 2.02,
+   "beds_pc": -1.82,
+   "unemployment": -1.7,
+   "out_commute": -1.4,
+   "paddy_share": -1.37,
+   "pop_density": -1.34,
+   "single_hh": 1.34
+  },
+  "central": [
+   "北海道日高町",
+   "北海道苫前町",
+   "北海道厚真町",
+   "北海道新得町",
+   "北海道上士幌町",
+   "鹿児島県屋久島町"
+  ],
+  "largest": [
+   "沖縄県宮古島市",
+   "長崎県対馬市",
+   "北海道中標津町",
+   "北海道新ひだか町",
+   "北海道紋別市",
+   "三重県鳥羽市"
+  ],
+  "prefs": {
+   "北海道": 71,
+   "沖縄県": 17,
+   "鹿児島県": 13,
+   "東京都": 9
+  }
+ },
+ {
+  "level": "major",
+  "id": 7,
+  "major": 7,
+  "n": 221,
+  "stability": 0.504,
+  "pop_total": 1290154,
+  "features": {
+   "beds_pc": -1.82,
+   "low_edu": 1.59,
+   "hospital_dist": 1.57,
+   "station_dist": 1.48,
+   "natural_change": -1.41,
+   "elderly_workers": 1.38,
+   "elderly_single_hh": 1.34,
+   "elderly_ratio": 1.32
+  },
+  "central": [
+   "高知県津野町",
+   "島根県奥出雲町",
+   "福島県西会津町",
+   "熊本県上天草市",
+   "新潟県阿賀町",
+   "鳥取県若桜町"
+  ],
+  "largest": [
+   "長崎県南島原市",
+   "福島県田村市",
+   "秋田県男鹿市",
+   "石川県輪島市",
+   "熊本県上天草市",
+   "岩手県八幡平市"
+  ],
+  "prefs": {
+   "北海道": 22,
+   "長野県": 17,
+   "青森県": 16,
+   "福島県": 15
+  }
+ },
+ {
+  "level": "minor",
+  "id": 0,
+  "major": 0,
+  "n": 48,
+  "stability": 0.891,
+  "pop_total": 8597382,
+  "features": {
+   "day_night": 4.0,
+   "highrise_ratio": 4.0,
+   "car_commute": -3.82,
+   "income": 3.76,
+   "jobs_per_capita": 3.31,
+   "detached_ratio": -3.29,
+   "single_hh": 3.1,
+   "doctors_pc": 3.07
+  },
+  "central": [
+   "愛知県名古屋市中村区",
+   "大阪府大阪市福島区",
+   "神奈川県横浜市中区",
+   "京都府京都市中京区",
+   "京都府京都市下京区",
+   "大阪府大阪市天王寺区"
+  ],
+  "largest": [
+   "東京都江東区",
+   "東京都品川区",
+   "東京都新宿区",
+   "岡山県岡山市北区",
+   "宮城県仙台市青葉区",
+   "東京都豊島区"
+  ],
+  "prefs": {
+   "東京都": 13,
+   "大阪府": 8,
+   "愛知県": 6,
+   "京都府": 4
+  }
+ },
+ {
+  "level": "minor",
+  "id": 1,
+  "major": 1,
+  "n": 63,
+  "stability": 0.72,
+  "pop_total": 16280547,
+  "features": {
+   "car_commute": -3.67,
+   "rail_commute": 3.3,
+   "highrise_ratio": 3.2,
+   "univ_grad": 2.98,
+   "income": 2.85,
+   "detached_ratio": -2.67,
+   "pop_density": 2.09,
+   "building_ratio": 2.05
+  },
+  "central": [
+   "東京都府中市",
+   "東京都調布市",
+   "千葉県習志野市",
+   "埼玉県さいたま市北区",
+   "愛知県名古屋市天白区",
+   "神奈川県川崎市高津区"
+  ],
+  "largest": [
+   "東京都世田谷区",
+   "東京都練馬区",
+   "東京都大田区",
+   "東京都江戸川区",
+   "東京都杉並区",
+   "東京都板橋区"
+  ],
+  "prefs": {
+   "東京都": 21,
+   "神奈川県": 14,
+   "埼玉県": 8,
+   "兵庫県": 4
+  }
+ },
+ {
+  "level": "minor",
+  "id": 2,
+  "major": 1,
+  "n": 61,
+  "stability": 0.568,
+  "pop_total": 10157551,
+  "features": {
+   "highrise_ratio": 3.33,
+   "car_commute": -3.28,
+   "bike_commute": 2.58,
+   "rail_commute": 2.4,
+   "detached_ratio": -2.31,
+   "building_ratio": 1.95,
+   "pop_density": 1.85,
+   "pw_density": 1.78
+  },
+  "central": [
+   "兵庫県尼崎市",
+   "愛知県名古屋市北区",
+   "京都府京都市伏見区",
+   "大阪府東大阪市",
+   "大阪府泉大津市",
+   "大阪府大阪市西淀川区"
+  ],
+  "largest": [
+   "東京都足立区",
+   "大阪府東大阪市",
+   "兵庫県尼崎市",
+   "東京都葛飾区",
+   "沖縄県那覇市",
+   "京都府京都市伏見区"
+  ],
+  "prefs": {
+   "大阪府": 27,
+   "愛知県": 6,
+   "京都府": 6,
+   "東京都": 5
+  }
+ },
+ {
+  "level": "minor",
+  "id": 3,
+  "major": 1,
+  "n": 64,
+  "stability": 0.612,
+  "pop_total": 13460467,
+  "features": {
+   "car_commute": -3.04,
+   "highrise_ratio": 2.9,
+   "rail_commute": 2.57,
+   "income": 2.08,
+   "univ_grad": 1.92,
+   "detached_ratio": -1.89,
+   "pop_density": 1.81,
+   "building_ratio": 1.8
+  },
+  "central": [
+   "千葉県八千代市",
+   "千葉県松戸市",
+   "千葉県船橋市",
+   "東京都町田市",
+   "千葉県柏市",
+   "神奈川県相模原市南区"
+  ],
+  "largest": [
+   "千葉県船橋市",
+   "埼玉県川口市",
+   "東京都八王子市",
+   "千葉県松戸市",
+   "東京都町田市",
+   "千葉県柏市"
+  ],
+  "prefs": {
+   "神奈川県": 15,
+   "埼玉県": 10,
+   "大阪府": 8,
+   "千葉県": 7
+  }
+ },
+ {
+  "level": "minor",
+  "id": 4,
+  "major": 2,
+  "n": 55,
+  "stability": 0.316,
+  "pop_total": 4675163,
+  "features": {
+   "rail_commute": 2.26,
+   "car_commute": -1.96,
+   "univ_grad": 1.88,
+   "jobs_per_capita": -1.86,
+   "day_night": -1.68,
+   "highrise_ratio": 1.55,
+   "income": 1.53,
+   "did_ratio": 1.34
+  },
+  "central": [
+   "千葉県佐倉市",
+   "千葉県四街道市",
+   "兵庫県川西市",
+   "奈良県香芝市",
+   "埼玉県蓮田市",
+   "茨城県牛久市"
+  ],
+  "largest": [
+   "奈良県奈良市",
+   "愛知県名古屋市緑区",
+   "兵庫県神戸市北区",
+   "京都府宇治市",
+   "千葉県佐倉市",
+   "埼玉県さいたま市見沼区"
+  ],
+  "prefs": {
+   "奈良県": 9,
+   "大阪府": 8,
+   "千葉県": 7,
+   "京都府": 7
+  }
+ },
+ {
+  "level": "minor",
+  "id": 5,
+  "major": 2,
+  "n": 101,
+  "stability": 0.277,
+  "pop_total": 12620815,
+  "features": {
+   "highrise_ratio": 2.07,
+   "rail_commute": 1.7,
+   "car_commute": -1.52,
+   "did_ratio": 1.32,
+   "pop_density": 1.17,
+   "building_ratio": 1.16,
+   "pw_density": 1.15,
+   "income": 1.05
+  },
+  "central": [
+   "愛知県一宮市",
+   "愛知県春日井市",
+   "兵庫県加古川市",
+   "埼玉県久喜市",
+   "埼玉県川越市",
+   "神奈川県平塚市"
+  ],
+  "largest": [
+   "神奈川県横須賀市",
+   "愛知県岡崎市",
+   "愛知県一宮市",
+   "埼玉県川越市",
+   "滋賀県大津市",
+   "埼玉県越谷市"
+  ],
+  "prefs": {
+   "愛知県": 17,
+   "埼玉県": 16,
+   "大阪府": 12,
+   "福岡県": 11
+  }
+ },
+ {
+  "level": "minor",
+  "id": 6,
+  "major": 2,
+  "n": 70,
+  "stability": 0.272,
+  "pop_total": 3668899,
+  "features": {
+   "rail_commute": 1.09,
+   "retail_pc": -1.06,
+   "building_ratio": 1.03,
+   "forest_ratio": -1.02,
+   "day_night": -0.96,
+   "did_ratio": 0.93,
+   "highrise_ratio": 0.89,
+   "child_ratio": 0.89
+  },
+  "central": [
+   "千葉県野田市",
+   "愛知県あま市",
+   "愛知県武豊町",
+   "岐阜県各務原市",
+   "奈良県葛城市",
+   "愛知県知多市"
+  ],
+  "largest": [
+   "岡山県岡山市南区",
+   "千葉県野田市",
+   "岐阜県各務原市",
+   "広島県広島市安佐北区",
+   "新潟県新潟市東区",
+   "埼玉県鴻巣市"
+  ],
+  "prefs": {
+   "愛知県": 12,
+   "埼玉県": 7,
+   "奈良県": 5,
+   "千葉県": 5
+  }
+ },
+ {
+  "level": "minor",
+  "id": 7,
+  "major": 3,
+  "n": 18,
+  "stability": 0.535,
+  "pop_total": 945227,
+  "features": {
+   "child_ratio": 2.8,
+   "unmarried": 2.17,
+   "unemployment": 2.11,
+   "private_rent_ratio": 2.05,
+   "detached_ratio": -1.92,
+   "owner_ratio": -1.78,
+   "station_dist": 1.67,
+   "pop_change": 1.58
+  },
+  "central": [
+   "沖縄県沖縄市",
+   "沖縄県与那原町",
+   "沖縄県糸満市",
+   "沖縄県うるま市",
+   "沖縄県豊見城市",
+   "沖縄県名護市"
+  ],
+  "largest": [
+   "沖縄県沖縄市",
+   "沖縄県うるま市",
+   "沖縄県浦添市",
+   "沖縄県宜野湾市",
+   "沖縄県豊見城市",
+   "沖縄県名護市"
+  ],
+  "prefs": {
+   "沖縄県": 18
+  }
+ },
+ {
+  "level": "minor",
+  "id": 8,
+  "major": 3,
+  "n": 77,
+  "stability": 0.257,
+  "pop_total": 8458413,
+  "features": {
+   "foreign_ratio": 1.19,
+   "secondary_ind": 1.07,
+   "proj_change_2050": 0.95,
+   "pop_change": 0.95,
+   "elderly_ratio": -0.89,
+   "elderly_single_hh": -0.89,
+   "child_ratio": 0.89,
+   "private_rent_ratio": 0.88
+  },
+  "central": [
+   "三重県鈴鹿市",
+   "群馬県太田市",
+   "栃木県小山市",
+   "滋賀県彦根市",
+   "静岡県磐田市",
+   "愛知県常滑市"
+  ],
+  "largest": [
+   "静岡県浜松市",
+   "栃木県宇都宮市",
+   "愛知県豊田市",
+   "群馬県高崎市",
+   "愛知県豊橋市",
+   "三重県四日市市"
+  ],
+  "prefs": {
+   "静岡県": 14,
+   "愛知県": 11,
+   "岐阜県": 5,
+   "群馬県": 5
+  }
+ },
+ {
+  "level": "minor",
+  "id": 9,
+  "major": 3,
+  "n": 90,
+  "stability": 0.405,
+  "pop_total": 17168431,
+  "features": {
+   "doctors_pc": 1.82,
+   "highrise_ratio": 1.55,
+   "private_rent_ratio": 1.06,
+   "did_ratio": 1.04,
+   "emp_info_finance_prof": 1.03,
+   "detached_ratio": -0.95,
+   "out_commute": -0.93,
+   "bike_commute": 0.87
+  },
+  "central": [
+   "福島県福島市",
+   "山口県宇部市",
+   "山形県山形市",
+   "秋田県秋田市",
+   "福島県会津若松市",
+   "鳥取県鳥取市"
+  ],
+  "largest": [
+   "鹿児島県鹿児島市",
+   "兵庫県姫路市",
+   "愛媛県松山市",
+   "大分県大分市",
+   "岡山県倉敷市",
+   "石川県金沢市"
+  ],
+  "prefs": {
+   "北海道": 12,
+   "福岡県": 7,
+   "山口県": 5,
+   "長崎県": 5
+  }
+ },
+ {
+  "level": "minor",
+  "id": 10,
+  "major": 3,
+  "n": 137,
+  "stability": 0.3,
+  "pop_total": 10226948,
+  "features": {
+   "secondary_ind": 0.67,
+   "doctors_pc": 0.66,
+   "highrise_ratio": 0.53,
+   "emp_manufacturing": 0.45,
+   "did_ratio": 0.44,
+   "beds_pc": 0.44,
+   "paddy_share": 0.41,
+   "private_rent_ratio": 0.38
+  },
+  "central": [
+   "山口県山陽小野田市",
+   "愛媛県西条市",
+   "宮城県大崎市",
+   "三重県松阪市",
+   "栃木県佐野市",
+   "長野県上田市"
+  ],
+  "largest": [
+   "福島県いわき市",
+   "新潟県長岡市",
+   "青森県八戸市",
+   "新潟県上越市",
+   "島根県出雲市",
+   "富山県高岡市"
+  ],
+  "prefs": {
+   "長野県": 12,
+   "福岡県": 9,
+   "栃木県": 7,
+   "福島県": 5
+  }
+ },
+ {
+  "level": "minor",
+  "id": 11,
+  "major": 4,
+  "n": 80,
+  "stability": 0.231,
+  "pop_total": 2832122,
+  "features": {
+   "agri_ratio": 1.17,
+   "day_night": -1.11,
+   "hh_size": 0.98,
+   "single_hh": -0.97,
+   "child_ratio": 0.85,
+   "emp_hospitality": -0.76,
+   "restaurant_pc": -0.71,
+   "jobs_per_capita": -0.7
+  },
+  "central": [
+   "佐賀県神埼市",
+   "佐賀県小城市",
+   "三重県明和町",
+   "熊本県宇土市",
+   "茨城県那珂市",
+   "福井県坂井市"
+  ],
+  "largest": [
+   "石川県白山市",
+   "静岡県島田市",
+   "富山県射水市",
+   "福井県坂井市",
+   "埼玉県行田市",
+   "三重県名張市"
+  ],
+  "prefs": {
+   "長野県": 7,
+   "佐賀県": 5,
+   "茨城県": 5,
+   "岐阜県": 5
+  }
+ },
+ {
+  "level": "minor",
+  "id": 12,
+  "major": 4,
+  "n": 29,
+  "stability": 0.157,
+  "pop_total": 586253,
+  "features": {
+   "unemployment": 2.94,
+   "jobs_per_capita": -1.33,
+   "emp_hospitality": -1.16,
+   "restaurant_pc": -1.09,
+   "day_night": -1.05,
+   "child_ratio": -0.91,
+   "female_lfpr": -0.89,
+   "emp_info_finance_prof": -0.83
+  },
+  "central": [
+   "福岡県桂川町",
+   "千葉県いすみ市",
+   "福岡県鞍手町",
+   "福岡県みやこ町",
+   "千葉県山武市",
+   "秋田県潟上市"
+  ],
+  "largest": [
+   "千葉県八街市",
+   "千葉県山武市",
+   "北海道北斗市",
+   "宮城県東松島市",
+   "千葉県いすみ市",
+   "秋田県潟上市"
+  ],
+  "prefs": {
+   "福岡県": 9,
+   "千葉県": 7,
+   "宮城県": 4,
+   "北海道": 2
+  }
+ },
+ {
+  "level": "minor",
+  "id": 13,
+  "major": 4,
+  "n": 55,
+  "stability": 0.273,
+  "pop_total": 1146403,
+  "features": {
+   "emp_manufacturing": 1.72,
+   "emp_hospitality": -1.67,
+   "secondary_ind": 1.47,
+   "emp_health_welfare": -1.23,
+   "foreign_ratio": 1.15,
+   "agri_ratio": 1.14,
+   "hh_size": 0.93,
+   "emp_info_finance_prof": -0.89
+  },
+  "central": [
+   "滋賀県日野町",
+   "茨城県小美玉市",
+   "茨城県常総市",
+   "兵庫県加西市",
+   "群馬県千代田町",
+   "栃木県上三川町"
+  ],
+  "largest": [
+   "茨城県常総市",
+   "愛知県田原市",
+   "北海道石狩市",
+   "茨城県坂東市",
+   "茨城県小美玉市",
+   "三重県いなべ市"
+  ],
+  "prefs": {
+   "茨城県": 6,
+   "埼玉県": 5,
+   "岐阜県": 4,
+   "長野県": 4
+  }
+ },
+ {
+  "level": "minor",
+  "id": 14,
+  "major": 4,
+  "n": 82,
+  "stability": 0.232,
+  "pop_total": 2669361,
+  "features": {
+   "hh_size": 1.13,
+   "secondary_ind": 1.04,
+   "single_hh": -0.91,
+   "emp_manufacturing": 0.87,
+   "mobility": -0.84,
+   "owner_ratio": 0.75,
+   "agri_ratio": 0.71,
+   "emp_hospitality": -0.7
+  },
+  "central": [
+   "香川県三豊市",
+   "茨城県桜川市",
+   "茨城県常陸大宮市",
+   "新潟県胎内市",
+   "福島県伊達市",
+   "新潟県新潟市西蒲区"
+  ],
+  "largest": [
+   "茨城県筑西市",
+   "新潟県三条市",
+   "新潟県燕市",
+   "岐阜県中津川市",
+   "宮城県登米市",
+   "福島県須賀川市"
+  ],
+  "prefs": {
+   "新潟県": 11,
+   "福島県": 9,
+   "茨城県": 6,
+   "岡山県": 6
+  }
+ },
+ {
+  "level": "minor",
+  "id": 15,
+  "major": 4,
+  "n": 77,
+  "stability": 0.314,
+  "pop_total": 944682,
+  "features": {
+   "beds_pc": -1.82,
+   "clinics_pc": -1.6,
+   "hh_size": 1.59,
+   "day_night": -1.35,
+   "single_hh": -1.31,
+   "owner_ratio": 1.18,
+   "doctors_pc": -1.16,
+   "jobs_per_capita": -1.08
+  },
+  "central": [
+   "石川県中能登町",
+   "千葉県東庄町",
+   "山形県遊佐町",
+   "石川県宝達志水町",
+   "長野県喬木村",
+   "青森県六戸町"
+  ],
+  "largest": [
+   "茨城県常陸太田市",
+   "茨城県鉾田市",
+   "茨城県行方市",
+   "青森県つがる市",
+   "青森県平川市",
+   "富山県立山町"
+  ],
+  "prefs": {
+   "青森県": 10,
+   "長野県": 8,
+   "山形県": 7,
+   "茨城県": 6
+  }
+ },
+ {
+  "level": "minor",
+  "id": 16,
+  "major": 4,
+  "n": 56,
+  "stability": 0.233,
+  "pop_total": 581354,
+  "features": {
+   "beds_pc": -1.82,
+   "hospital_dist": 1.03,
+   "doctors_pc": -0.96,
+   "single_hh": -0.91,
+   "emp_health_welfare": -0.89,
+   "hh_size": 0.86,
+   "owner_ratio": 0.86,
+   "emp_hospitality": -0.84
+  },
+  "central": [
+   "香川県まんのう町",
+   "三重県多気町",
+   "和歌山県広川町",
+   "鳥取県琴浦町",
+   "群馬県甘楽町",
+   "長野県飯島町"
+  ],
+  "largest": [
+   "滋賀県米原市",
+   "岐阜県本巣市",
+   "山形県村山市",
+   "岐阜県揖斐川町",
+   "香川県まんのう町",
+   "宮崎県新富町"
+  ],
+  "prefs": {
+   "北海道": 5,
+   "長野県": 5,
+   "岐阜県": 5,
+   "福島県": 4
+  }
+ },
+ {
+  "level": "minor",
+  "id": 17,
+  "major": 5,
+  "n": 64,
+  "stability": 0.314,
+  "pop_total": 2637728,
+  "features": {
+   "out_commute": -1.03,
+   "restaurant_pc": 0.9,
+   "beds_pc": 0.9,
+   "elderly_single_hh": 0.88,
+   "doctors_pc": 0.85,
+   "retail_pc": 0.76,
+   "emp_health_welfare": 0.68,
+   "foreign_ratio": -0.6
+  },
+  "central": [
+   "宮崎県日南市",
+   "大分県佐伯市",
+   "愛媛県大洲市",
+   "島根県益田市",
+   "大分県日田市",
+   "群馬県沼田市"
+  ],
+  "largest": [
+   "佐賀県唐津市",
+   "鹿児島県鹿屋市",
+   "山形県酒田市",
+   "岐阜県高山市",
+   "北海道岩見沢市",
+   "兵庫県豊岡市"
+  ],
+  "prefs": {
+   "北海道": 11,
+   "高知県": 6,
+   "鹿児島県": 5,
+   "和歌山県": 4
+  }
+ },
+ {
+  "level": "minor",
+  "id": 18,
+  "major": 5,
+  "n": 32,
+  "stability": 0.206,
+  "pop_total": 609925,
+  "features": {
+   "emp_hospitality": 2.52,
+   "restaurant_pc": 1.51,
+   "child_ratio": -1.2,
+   "elderly_workers": 1.05,
+   "regular_emp": -1.05,
+   "bike_commute": -1.04,
+   "elderly_ratio": 1.0,
+   "elderly_single_hh": 0.98
+  },
+  "central": [
+   "静岡県伊豆市",
+   "栃木県日光市",
+   "和歌山県白浜町",
+   "三重県志摩市",
+   "静岡県河津町",
+   "長野県木曽町"
+  ],
+  "largest": [
+   "栃木県日光市",
+   "静岡県伊東市",
+   "三重県志摩市",
+   "山梨県北杜市",
+   "千葉県南房総市",
+   "岐阜県下呂市"
+  ],
+  "prefs": {
+   "千葉県": 5,
+   "静岡県": 5,
+   "長野県": 3,
+   "群馬県": 3
+  }
+ },
+ {
+  "level": "minor",
+  "id": 19,
+  "major": 5,
+  "n": 48,
+  "stability": 0.223,
+  "pop_total": 539985,
+  "features": {
+   "clinics_pc": -1.94,
+   "primary_ind": 1.23,
+   "pop_density": -1.21,
+   "low_edu": 1.11,
+   "paddy_share": -1.06,
+   "out_commute": -1.05,
+   "station_dist": 0.96,
+   "elderly_single_hh": 0.92
+  },
+  "central": [
+   "北海道美幌町",
+   "長崎県平戸市",
+   "北海道八雲町",
+   "北海道清水町",
+   "北海道根室市",
+   "北海道美瑛町"
+  ],
+  "largest": [
+   "北海道登別市",
+   "北海道稚内市",
+   "長崎県平戸市",
+   "長崎県壱岐市",
+   "北海道根室市",
+   "北海道釧路町"
+  ],
+  "prefs": {
+   "北海道": 34,
+   "青森県": 4,
+   "長崎県": 2,
+   "鹿児島県": 2
+  }
+ },
+ {
+  "level": "minor",
+  "id": 20,
+  "major": 5,
+  "n": 140,
+  "stability": 0.295,
+  "pop_total": 4339183,
+  "features": {
+   "mobility": -0.77,
+   "natural_change": -0.58,
+   "income": -0.57,
+   "elderly_ratio": 0.56,
+   "owner_ratio": 0.53,
+   "single_hh": -0.53,
+   "unmarried": -0.52,
+   "proj_change_2050": -0.51
+  },
+  "central": [
+   "大分県臼杵市",
+   "岩手県一関市",
+   "岩手県奥州市",
+   "京都府京丹後市",
+   "宮城県白石市",
+   "秋田県大館市"
+  ],
+  "largest": [
+   "山形県鶴岡市",
+   "岩手県奥州市",
+   "岩手県一関市",
+   "岩手県花巻市",
+   "秋田県横手市",
+   "秋田県大仙市"
+  ],
+  "prefs": {
+   "岩手県": 9,
+   "兵庫県": 9,
+   "秋田県": 8,
+   "大分県": 7
+  }
+ },
+ {
+  "level": "minor",
+  "id": 21,
+  "major": 5,
+  "n": 68,
+  "stability": 0.332,
+  "pop_total": 999561,
+  "features": {
+   "elderly_single_hh": 1.95,
+   "natural_change": -1.36,
+   "elderly_ratio": 1.29,
+   "emp_health_welfare": 1.15,
+   "child_ratio": -1.12,
+   "low_edu": 1.1,
+   "female_lfpr": -1.0,
+   "elderly_workers": 0.99
+  },
+  "central": [
+   "愛媛県西予市",
+   "鹿児島県阿久根市",
+   "愛媛県鬼北町",
+   "鹿児島県伊佐市",
+   "鹿児島県湧水町",
+   "徳島県三好市"
+  ],
+  "largest": [
+   "熊本県天草市",
+   "新潟県佐渡市",
+   "福岡県嘉麻市",
+   "愛媛県西予市",
+   "長崎県五島市",
+   "鹿児島県曽於市"
+  ],
+  "prefs": {
+   "鹿児島県": 9,
+   "高知県": 7,
+   "北海道": 5,
+   "三重県": 5
+  }
+ },
+ {
+  "level": "minor",
+  "id": 22,
+  "major": 6,
+  "n": 17,
+  "stability": 0.499,
+  "pop_total": 31944,
+  "features": {
+   "female_lfpr": 4.0,
+   "station_dist": 4.0,
+   "hospital_dist": 3.94,
+   "mobility": 3.9,
+   "single_hh": 3.53,
+   "restaurant_pc": 2.89,
+   "emp_info_finance_prof": -2.73,
+   "clinics_pc": 2.55
+  },
+  "central": [
+   "沖縄県与那国町",
+   "沖縄県渡嘉敷村",
+   "沖縄県竹富町",
+   "北海道留寿都村",
+   "東京都利島村",
+   "沖縄県座間味村"
+  ],
+  "largest": [
+   "神奈川県箱根町",
+   "沖縄県竹富町",
+   "東京都小笠原村",
+   "東京都三宅村",
+   "北海道留寿都村",
+   "沖縄県与那国町"
+  ],
+  "prefs": {
+   "沖縄県": 6,
+   "東京都": 5,
+   "北海道": 3,
+   "鹿児島県": 2
+  }
+ },
+ {
+  "level": "minor",
+  "id": 23,
+  "major": 6,
+  "n": 38,
+  "stability": 0.301,
+  "pop_total": 124203,
+  "features": {
+   "hospital_dist": 2.1,
+   "unemployment": -1.97,
+   "station_dist": 1.89,
+   "beds_pc": -1.82,
+   "pop_density": -1.8,
+   "single_hh": 1.38,
+   "paddy_share": -1.38,
+   "clinics_pc": 1.38
+  },
+  "central": [
+   "北海道浦幌町",
+   "北海道新得町",
+   "北海道豊富町",
+   "北海道厚真町",
+   "北海道豊頃町",
+   "北海道苫前町"
+  ],
+  "largest": [
+   "青森県六ヶ所村",
+   "北海道安平町",
+   "広島県大崎上島町",
+   "愛媛県上島町",
+   "宮城県女川町",
+   "北海道新得町"
+  ],
+  "prefs": {
+   "北海道": 30,
+   "青森県": 1,
+   "宮城県": 1,
+   "長野県": 1
+  }
+ },
+ {
+  "level": "minor",
+  "id": 24,
+  "major": 6,
+  "n": 50,
+  "stability": 0.31,
+  "pop_total": 412023,
+  "features": {
+   "station_dist": 3.48,
+   "unemployment": -1.54,
+   "primary_ind": 1.53,
+   "pop_density": -1.49,
+   "clinics_pc": -1.44,
+   "paddy_share": -1.42,
+   "out_commute": -1.4,
+   "restaurant_pc": 1.12
+  },
+  "central": [
+   "北海道本別町",
+   "北海道足寄町",
+   "北海道平取町",
+   "北海道日高町",
+   "北海道標津町",
+   "北海道広尾町"
+  ],
+  "largest": [
+   "沖縄県宮古島市",
+   "北海道中標津町",
+   "北海道新ひだか町",
+   "北海道紋別市",
+   "北海道別海町",
+   "島根県隠岐の島町"
+  ],
+  "prefs": {
+   "北海道": 32,
+   "鹿児島県": 8,
+   "沖縄県": 5,
+   "東京都": 2
+  }
+ },
+ {
+  "level": "minor",
+  "id": 25,
+  "major": 6,
+  "n": 42,
+  "stability": 0.306,
+  "pop_total": 131029,
+  "features": {
+   "station_dist": 2.72,
+   "hospital_dist": 2.38,
+   "emp_hospitality": 2.18,
+   "clinics_pc": 2.0,
+   "beds_pc": -1.82,
+   "emp_info_finance_prof": -1.77,
+   "elderly_single_hh": 1.73,
+   "retail_pc": 1.57
+  },
+  "central": [
+   "北海道利尻富士町",
+   "鹿児島県屋久島町",
+   "東京都新島村",
+   "長野県大鹿村",
+   "東京都神津島村",
+   "奈良県十津川村"
+  ],
+  "largest": [
+   "長崎県対馬市",
+   "三重県鳥羽市",
+   "鹿児島県屋久島町",
+   "長野県白馬村",
+   "鹿児島県龍郷町",
+   "沖縄県国頭村"
+  ],
+  "prefs": {
+   "長野県": 7,
+   "北海道": 6,
+   "沖縄県": 5,
+   "奈良県": 3
+  }
+ },
+ {
+  "level": "minor",
+  "id": 26,
+  "major": 7,
+  "n": 55,
+  "stability": 0.191,
+  "pop_total": 409256,
+  "features": {
+   "station_dist": 2.32,
+   "low_edu": 1.96,
+   "elderly_single_hh": 1.7,
+   "natural_change": -1.68,
+   "elderly_workers": 1.51,
+   "elderly_ratio": 1.51,
+   "child_ratio": -1.4,
+   "hospital_dist": 1.35
+  },
+  "central": [
+   "熊本県上天草市",
+   "岩手県西和賀町",
+   "岩手県岩泉町",
+   "高知県津野町",
+   "福島県南会津町",
+   "三重県南伊勢町"
+  ],
+  "largest": [
+   "秋田県男鹿市",
+   "石川県輪島市",
+   "熊本県上天草市",
+   "石川県志賀町",
+   "長崎県新上五島町",
+   "石川県能登町"
+  ],
+  "prefs": {
+   "北海道": 11,
+   "高知県": 5,
+   "福島県": 4,
+   "石川県": 4
+  }
+ },
+ {
+  "level": "minor",
+  "id": 27,
+  "major": 7,
+  "n": 64,
+  "stability": 0.319,
+  "pop_total": 276043,
+  "features": {
+   "beds_pc": -1.82,
+   "hospital_dist": 1.56,
+   "emp_info_finance_prof": -1.51,
+   "elderly_workers": 1.3,
+   "elderly_single_hh": 1.18,
+   "natural_change": -1.14,
+   "elderly_ratio": 1.12,
+   "doctors_pc": -1.07
+  },
+  "central": [
+   "和歌山県日高川町",
+   "長野県木島平村",
+   "山口県阿武町",
+   "和歌山県由良町",
+   "長野県麻績村",
+   "大分県九重町"
+  ],
+  "largest": [
+   "宮城県加美町",
+   "栃木県茂木町",
+   "長野県山ノ内町",
+   "高知県黒潮町",
+   "和歌山県日高川町",
+   "大分県九重町"
+  ],
+  "prefs": {
+   "長野県": 14,
+   "北海道": 10,
+   "福島県": 3,
+   "熊本県": 3
+  }
+ },
+ {
+  "level": "minor",
+  "id": 28,
+  "major": 7,
+  "n": 61,
+  "stability": 0.344,
+  "pop_total": 488704,
+  "features": {
+   "low_edu": 1.86,
+   "beds_pc": -1.82,
+   "hospital_dist": 1.45,
+   "natural_change": -1.34,
+   "regular_emp": 1.27,
+   "emp_info_finance_prof": -1.22,
+   "mobility": -1.19,
+   "bike_commute": -1.17
+  },
+  "central": [
+   "新潟県関川村",
+   "山形県真室川町",
+   "山形県朝日町",
+   "岩手県八幡平市",
+   "青森県東北町",
+   "秋田県三種町"
+  ],
+  "largest": [
+   "長崎県南島原市",
+   "福島県田村市",
+   "岩手県八幡平市",
+   "青森県東北町",
+   "秋田県三種町",
+   "栃木県那珂川町"
+  ],
+  "prefs": {
+   "青森県": 12,
+   "岩手県": 10,
+   "山形県": 10,
+   "福島県": 6
+  }
+ },
+ {
+  "level": "minor",
+  "id": 29,
+  "major": 7,
+  "n": 41,
+  "stability": 0.431,
+  "pop_total": 116151,
+  "features": {
+   "elderly_single_hh": 2.54,
+   "clinics_pc": 2.38,
+   "elderly_ratio": 2.2,
+   "child_ratio": -2.15,
+   "natural_change": -2.12,
+   "station_dist": 2.06,
+   "elderly_workers": 2.05,
+   "low_edu": 2.04
+  },
+  "central": [
+   "徳島県神山町",
+   "愛媛県久万高原町",
+   "福島県昭和村",
+   "徳島県那賀町",
+   "愛知県東栄町",
+   "鹿児島県南大隅町"
+  ],
+  "largest": [
+   "島根県邑南町",
+   "愛媛県久万高原町",
+   "徳島県那賀町",
+   "鹿児島県南大隅町",
+   "静岡県川根本町",
+   "青森県外ヶ浜町"
+  ],
+  "prefs": {
+   "奈良県": 6,
+   "高知県": 4,
+   "青森県": 3,
+   "愛知県": 3
+  }
+ }
+]

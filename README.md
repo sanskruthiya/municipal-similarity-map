@@ -22,7 +22,8 @@ cd web && python3 -m http.server 8765
 - 地図を拡大すると（ズーム7以上）市区町村名を表示。選択中の地域とTop10の名前は強調する
 - Top10のカードをクリックすると「似ている点・違う点」（共通の特徴、距離への寄与が大きい指標、距離²の分野別内訳）と指標プロファイルを並べて比較。カードの矢印またはダブルクリックでその地域へ移動
 - 選択した地域は URL（`#13113` など）に入るので、そのまま共有できる
-- 左上のパネルから「手法」「感度分析」「出典・注意」を表示。選択地域の見出しには類型とTop10の安定度を表示
+- 左上のパネルで色分けを「統計の類似／大分類（8）／小分類（30）」から切り替え。凡例の類型をクリックすると、その類型だけを表示し、特徴の説明・代表例・安定度を表示（類型の作り方は `docs/report.md` の 7 章）
+- 左上のパネルから「手法」「感度分析」「出典・注意」を表示。選択地域の見出しには大分類・小分類とTop10の安定度を表示
 - 等面積タイル地図（`web/data/tiles.json`）と3D散布図は、静的図・レポートでのみ使用（Webマップからは外した）
 
 ## データ
@@ -135,6 +136,7 @@ python3 scripts/04_static_maps.py # → output/*.png
 python3 scripts/07_sensitivity.py # → data/processed/sensitivity.json, web/data/sensitivity.json
 python3 scripts/08_tile_layout.py # → web/data/tiles.json（六角形タイル地図）
 python3 scripts/09_report_figures.py # → docs/figures/*.png, docs/report_stats.json
+python3 scripts/11_typology.py   # → web/data/typology.json, data/processed/typology_profiles.json（大分類8・小分類30、約3分）
 npx mapshaper data/geo/muni_simplified.geojson -simplify 25% keep-shapes -o format=topojson quantization=100000 web/data/muni.topojson
 ```
 
