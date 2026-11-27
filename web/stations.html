@@ -528,7 +528,7 @@ function structure(s) {
   const k = key => IND.findIndex(d => d.key === key);
   const d0 = s.raw[k("r0_density")], d2 = s.raw[k("r2_density")], b0 = s.raw[k("r0_building")], b2 = s.raw[k("r2_building")], a2 = s.raw[k("r2_agri")], f2 = s.raw[k("r2_forest")];
   if (d0 == null || d2 == null || b0 == null || b2 == null) return "";
-  const outer = a2 + f2 >= .5 ? (a2 >= f2 ? "農地" : "森林") : null;
+  const outer = a2 >= .5 ? "農地" : f2 >= .5 ? "森林" : a2 + f2 >= .5 ? "農地と森林" : null;
   if (b0 >= .6 && outer) return `駅前は建物が建て込んでいますが、1〜2km離れると${outer}が半分以上を占めます。`;
   if (b0 >= .6 && b2 >= .6) return d0 >= d2 * 1.3 ? `駅前に人が集まって住み、1〜2km先まで市街地が続いています。` : d2 >= d0 * 1.3 ? `駅前より1〜2kmの周辺のほうが人口密度が高く、住まいは駅から少し離れた場所に多くあります。` : `駅前から1〜2km先まで、同じくらいの密度の市街地が続いています。`;
   if (b0 < .3 && outer) return `駅前でも建物の用地は3割に満たず、周りには${outer}が広がっています。`;
